@@ -1,0 +1,19 @@
+.penguin{
+    flex: 0.5;
+    border-right: 1px solid var(--twitter-background);
+    min-width: fit-content;
+    padding: 0 90px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    backdrop-filter: blur(10px);
+}
+.oscar{
+    font-size: 1.2rem;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    margin-top: 8rem;
+    outline: none;
+    border-radius: 2px;
+}

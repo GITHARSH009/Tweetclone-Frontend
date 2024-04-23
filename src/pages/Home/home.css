@@ -1,0 +1,54 @@
+.app{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+}
+.non{
+    display: none;
+    height: 0%;
+    width: 0%;
+}
+
+.snow{
+  background: url("./img1.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:center;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+}
+
+.rain{
+  background: url("./Rainmain.gif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position:center;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+}
+
+  .cont{
+    width: 200px;
+    height: 200px;
+    background: rgba(230, 230, 7, 0.636);
+    border-radius: 50%;
+    margin-top: 3rem;
+    margin-inline: 10rem;
+    background-repeat: no-repeat;
+    animation: shine 4s ease-in-out infinite;
+    position: fixed;
+    /* z-index: -1; */
+}
+
+@keyframes shine{
+    50%{
+        box-shadow: 0 0 20px #ffdd50,
+                    0 0 60px  #ffdd50,
+                    0 0 250px #ffdd50;
+    }
+}
