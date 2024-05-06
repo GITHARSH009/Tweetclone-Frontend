@@ -13,6 +13,7 @@ import PublishIcon from "@mui/icons-material/Publish";
 function Post({ p }) {
   const { Name, Username,Photo, Post,bt, Profile } = p
 
+
   return (
     <div className="post">
       <div className="post__avatar">
@@ -35,7 +36,7 @@ function Post({ p }) {
         <div className="post__footer">
           <ChatBubbleOutlineIcon className="post__footer__icon" fontSize="small" />
           <RepeatIcon className="post__footer__icon" fontSize="small" />
-          <FavoriteBorderIcon className="post__footer__icon" fontSize="small" />
+          <FavoriteBorderIcon className="post__footer__icon" fontSize="small"/>
           <PublishIcon className="post__footer__icon" fontSize="small" />
         </div>
       </div>

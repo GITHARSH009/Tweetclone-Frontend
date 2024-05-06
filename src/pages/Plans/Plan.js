@@ -11,9 +11,10 @@ const Plan = () => {
   const email=user?.email;
 
   const checkouthandler =async(amount)=>{
-    const {data:{key}}=await axios.get("https://tweetmaster.onrender.com/api/getkey")
-    const {data:{order}}=await axios.post("https://tweetmaster.onrender.com/checkout",{amount,email})
+    const {data:{key}}=await axios.get("http://localhost:8002/api/getkey")
+    const {data:{order}}=await axios.post("http://localhost:8002/checkout",{amount,email})
     console.log(window);
+    console.log(order);
     const options ={
       key,
       amount,
@@ -21,8 +22,8 @@ const Plan = () => {
       name:"Twitter",
       description:"Twitter Clone",
       image:"https://ibb.co/3hXY2sR",
-      order_id:order.id,
-      callback_url:`https://tweetmaster.onrender.com/paymentverification`,
+      order_id:order?order.id:'H3fj_2987h235991',
+      callback_url:`http://localhost:8002/paymentverification`,
       prefill:{
         name:"Twitter",
         email:"harsh@gmail.com",

@@ -7,7 +7,7 @@ const Homelive = () => {
    const [room,setRoom]=useState("");
 
     const handle=()=>{
-      window.open(`https://twitter-rtr.netlify.app/room/${room}`);
+      window.open(`http://localhost:3000/room/${room}`);
       setRoom("");
     }
 

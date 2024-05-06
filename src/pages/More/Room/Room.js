@@ -21,7 +21,7 @@ const Room = () => {
             sharedLinks:[
                 {
                     name:"Copy Url Link",
-                    url:`https://twitter-rtr.netlify.app/room/${roomid}`
+                    url:`http://localhost:3000/room/${roomid}`
                 }
             ],
             scenario: {
