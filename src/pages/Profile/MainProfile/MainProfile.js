@@ -26,7 +26,7 @@ const MainProfile = ({ user }) => {
   const username = user?.email?.split('@')[0];
 
   useEffect(() => {
-    fetch(`https://tweetmaster.onrender.com/post_detail?email= ${email}`)
+    fetch(`http://localhost:8002/post_detail?email= ${email}`)
     .then(res => res.json())
     .then(data => {
       setPosts(data);
@@ -58,7 +58,7 @@ const MainProfile = ({ user }) => {
         }
         setIsLoading(false)
         if (url) {
-          fetch(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
+          fetch(`http://localhost:8002/userUpdates/${user?.email}`, {
             method: "PATCH",
             headers: {
               'content-type': 'application/json'
@@ -98,7 +98,7 @@ const MainProfile = ({ user }) => {
         }
         setIsLoading(false)
         if (url) {
-          fetch(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
+          fetch(`http://localhost:8002/userUpdates/${user?.email}`, {
             method: "PATCH",
             headers: {
               'content-type': 'application/json'

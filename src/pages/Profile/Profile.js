@@ -1,6 +1,6 @@
 import React from 'react'
 import "../Page.css"
-import auth from '../../firebase.init';
+import {auth} from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import MainProfile from './MainProfile/MainProfile'
 

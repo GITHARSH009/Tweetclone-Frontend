@@ -1,19 +1,99 @@
+/* Layout Integration CSS - For proper Sidebar + Page layout */
+
+/* Main app container to ensure proper layout */
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: var(--twitter-dark);
+}
+
+/* Sidebar adjustments to work with new page layout - preserve original sizing */
+.app-container .sidebar {
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+    /* Don't override width - let original sidebar.css handle sizing */
+}
+
+/* Page container that takes remaining space */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Important for proper flex behavior */
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Header area if you have one */
+.page-header {
+    flex-shrink: 0;
+    padding: 0 clamp(24px, 4vw, 80px);
+    border-bottom: 1px solid var(--twitter-border);
+    background: rgba(15, 20, 25, 0.95);
+    backdrop-filter: blur(20px);
+}
+
+/* Main page content area */
+.page-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Responsive breakpoints - work with original sidebar breakpoints */
+@media (max-width: 1200px) {
+    /* Let original sidebar.css handle its own responsive behavior */
+}
+
+@media (max-width: 950px) {
+    /* Let original sidebar.css handle its own responsive behavior */
+    
+    /* Ensure page takes full remaining space on tablet */
+    .page {
+        padding: 0 clamp(20px, 4vw, 50px);
+    }
+}
+
+@media (max-width: 688px) {
+    .app-container {
+        flex-direction: column;
+    }
+    
+    /* Let original sidebar.css handle mobile behavior */
+    
+    .main-content {
+        order: 1;
+        height: calc(100vh - 60px);
+    }
+    
+    .page {
+        width: 100%;
+        padding: 0 clamp(16px, 4vw, 32px);
+    }
+}
+
+/* Ensure smooth transitions between breakpoints */
+.sidebar,
+.page,
+.main-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fix for potential overflow issues */
+* {
+    box-sizing: border-box;
+}
+
 body {
-  --twitter-color: #50b7f5;
-  --twitter-background: #e6ecf0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
 }
 
-.app {
-  display: flex;
-  height: 100vh;
-  max-width: 1300px;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 10px;
-}
-
-@media screen and (max-width:688px) {
-  .app {
-    display: block;
-  }
+#root {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
 }

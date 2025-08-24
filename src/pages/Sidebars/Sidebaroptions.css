@@ -1,33 +1,367 @@
+/* Enhanced Professional Sidebarsoptions.css */
+
+:root {
+  --twitter-color: #1DA1F2;
+  --twitter-hover: rgba(29, 161, 242, 0.1);
+  --twitter-hover-dark: rgba(29, 161, 242, 0.15);
+  --text-primary: #E7E9EA;
+  --text-secondary: #8B98A5;
+  --text-muted: #6E7681;
+  --sidebar-hover: rgba(255, 255, 255, 0.06);
+  --sidebar-hover-light: rgba(255, 255, 255, 0.03);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+}
+
 .sidebarOptions {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 16px;
+  margin: 2px 0;
+  border-radius: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  min-height: 48px;
+  box-sizing: border-box;
+}
+
+/* Subtle background pattern */
+.sidebarOptions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.02) 50%, 
+    transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sidebarOptions:hover::before {
+  opacity: 1;
+}
+
+/* Enhanced hover state */
+.sidebarOptions:hover {
+  background: linear-gradient(135deg, 
+    var(--sidebar-hover) 0%, 
+    var(--sidebar-hover-light) 100%);
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px var(--shadow-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Active state */
+.sidebarOptions.active {
+  background: linear-gradient(135deg, 
+    var(--twitter-hover-dark) 0%, 
+    var(--twitter-hover) 100%);
+  border-left: 4px solid var(--twitter-color);
+  color: var(--twitter-color);
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(29, 161, 242, 0.2);
+}
+
+.sidebarOptions.active::before {
+  opacity: 1;
+  background: linear-gradient(90deg, 
+    rgba(29, 161, 242, 0.1) 0%, 
+    rgba(29, 161, 242, 0.05) 50%, 
+    transparent 100%);
+}
+
+.sidebarOptions.active:hover {
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.2) 0%, 
+    rgba(29, 161, 242, 0.1) 100%);
+  transform: translateX(6px);
+  box-shadow: 0 6px 20px rgba(29, 161, 242, 0.25);
+}
+
+/* Icon styling */
+.sidebarOptions > .MuiSvgIcon-root {
+  padding: 8px;
+  margin-right: 12px;
+  color: var(--text-primary);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 26px !important;
+  border-radius: 50%;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.sidebarOptions:hover > .MuiSvgIcon-root {
+  color: var(--twitter-color);
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.15) 0%, 
+    rgba(29, 161, 242, 0.05) 100%);
+  border-color: rgba(29, 161, 242, 0.3);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+}
+
+.sidebarOptions.active > .MuiSvgIcon-root {
+  color: var(--twitter-color);
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.2) 0%, 
+    rgba(29, 161, 242, 0.1) 100%);
+  border-color: rgba(29, 161, 242, 0.4);
+  box-shadow: 0 4px 16px rgba(29, 161, 242, 0.3);
+}
+
+/* Text styling */
+.sidebarOptions > h2 {
+  font-weight: 500;
+  font-size: 17px;
+  margin: 0;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+  flex: 1;
+}
+
+.sidebarOptions:hover > h2 {
+  color: var(--twitter-color);
+  font-weight: 600;
+  transform: translateX(2px);
+}
+
+.sidebarOptions.active > h2 {
+  color: var(--twitter-color);
+  font-weight: 700;
+}
+
+/* Enhanced done icon */
+.done__icon {
+  color: var(--twitter-color) !important;
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.15) 0%, 
+    rgba(29, 161, 242, 0.05) 100%) !important;
+  border-radius: 50% !important;
+  padding: 6px !important;
+  border: 1px solid rgba(29, 161, 242, 0.3) !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(29, 161, 242, 0.2) !important;
+}
+
+.done__icon:hover {
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.25) 0%, 
+    rgba(29, 161, 242, 0.1) 100%) !important;
+  border-color: rgba(29, 161, 242, 0.5) !important;
+  transform: scale(1.05) !important;
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3) !important;
+}
+
+/* Notification badge styling (for future use) */
+.sidebarOptions .notification-badge {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background: linear-gradient(135deg, #FF6B6B 0%, #FF5252 100%);
+  color: white;
+  border-radius: 10px;
+  padding: 2px 6px;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 16px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(255, 107, 107, 0.4);
+  animation: badge-pulse 2s ease-in-out infinite;
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+/* Focus states for accessibility */
+.sidebarOptions:focus {
+  outline: 2px solid var(--twitter-color);
+  outline-offset: 2px;
+  border-radius: 20px;
+}
+
+.sidebarOptions:focus-visible {
+  outline: 2px solid var(--twitter-color);
+  outline-offset: 2px;
+}
+
+/* Loading state */
+.sidebarOptions.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.sidebarOptions.loading > .MuiSvgIcon-root {
+  animation: icon-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes icon-pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive design for different sidebar states */
+@media screen and (max-width: 1200px) {
+  .sidebarOptions {
+    padding: 10px 12px;
+  }
+  
+  .sidebarOptions > h2 {
+    font-size: 16px;
+  }
+  
+  .sidebarOptions > .MuiSvgIcon-root {
+    font-size: 24px !important;
+    margin-right: 10px;
+  }
+}
+
+/* Collapsed sidebar (icon-only) */
+@media screen and (max-width: 950px) {
+  .sidebarOptions {
+    padding: 12px;
+    justify-content: center;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    margin: 4px auto;
+  }
+  
+  .sidebarOptions > h2 {
+    display: none;
+  }
+  
+  .sidebarOptions > .MuiSvgIcon-root {
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
   }
   
   .sidebarOptions:hover {
-    background-color: #e8f5fe;
-    border-radius: 30px;
-    color: var(--twitter-color);
-    transition: color 100ms ease-out;
+    transform: scale(1.1);
+    background: var(--twitter-hover-dark);
   }
   
-  .sidebarOptions>.MuiSvgIcon-root {
-    padding: 0.5px 5px;
+  .sidebarOptions.active {
+    background: var(--twitter-hover-dark);
+    border: 2px solid var(--twitter-color);
+    border-left: 2px solid var(--twitter-color);
   }
   
-  .sidebarOptions>h2 {
-    font-weight: 600;
-    font-size: 18px;
-    margin-right: 13px;
-    padding-top: 3px;
+  .sidebarOptions:hover > .MuiSvgIcon-root,
+  .sidebarOptions.active > .MuiSvgIcon-root {
+    background: none;
+    border: none;
+    box-shadow: none;
+    transform: none;
   }
   
-  .done__icon {
-    color: var(--twitter-color) !important;
+  /* Tooltip for collapsed state */
+  .sidebarOptions::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 120%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
   
-  @media screen and (max-width:688px) {
-    .sidebar__tweet {
-      display: none;
-    }
+  .sidebarOptions:hover::after {
+    opacity: 1;
   }
+}
+
+@media screen and (max-width: 688px) {
+  .sidebarOptions {
+    display: none;
+  }
+}
+
+/* Hover effects for desktop only */
+@media (hover: hover) {
+  .sidebarOptions:hover {
+    background: linear-gradient(135deg, 
+      var(--sidebar-hover) 0%, 
+      var(--sidebar-hover-light) 100%);
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .sidebarOptions,
+  .sidebarOptions > .MuiSvgIcon-root,
+  .sidebarOptions > h2,
+  .notification-badge {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .sidebarOptions:hover {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .sidebarOptions {
+    border: 1px solid var(--text-secondary);
+  }
+  
+  .sidebarOptions:hover,
+  .sidebarOptions.active {
+    border: 2px solid var(--twitter-color);
+    background: var(--twitter-hover-dark);
+  }
+  
+  .sidebarOptions::before {
+    display: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .sidebarOptions {
+    background: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+  }
+}

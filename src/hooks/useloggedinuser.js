@@ -7,7 +7,7 @@ const Useloggedinuser = () => {
     const email = user?.email;
     const [loggedInUser, setLoggedInUser] = useState({});
     useEffect(() => {
-        fetch(`https://tweetmaster.onrender.com/loggedInUser?email=${email}`)
+        fetch(`http://localhost:8002/loggedInUser?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 // console.log('from useLoggedinuser', data)
