@@ -1,0 +1,562 @@
+/* Professional Chat Component - Aligned with Page.css Design System */
+
+/* Import color variables from Page.css */
+:root {
+    /* Enhanced color system matching Page.css */
+    --twitter-background: rgba(56, 68, 77, 0.3);
+    --twitter-color: #E7E9EA;
+    --twitter-primary: #1DA1F2;
+    --twitter-primary-hover: #1A91DA;
+    --twitter-dark: #0F1419;
+    --twitter-dark-secondary: #192734;
+    --twitter-text-secondary: #8B98A5;
+    --twitter-text-muted: #6E7681;
+    --twitter-border: rgba(56, 68, 77, 0.4);
+    --twitter-hover: rgba(255, 255, 255, 0.04);
+    --twitter-shadow-light: rgba(0, 0, 0, 0.1);
+    --twitter-shadow-medium: rgba(0, 0, 0, 0.15);
+    --twitter-shadow-heavy: rgba(0, 0, 0, 0.25);
+    
+    /* Chat-specific colors */
+    --chat-sent-bg: linear-gradient(135deg, var(--twitter-primary), #1A91DA);
+    --chat-received-bg: rgba(56, 68, 77, 0.6);
+    --chat-input-bg: rgba(25, 39, 52, 0.8);
+    --chat-header-bg: rgba(15, 20, 25, 0.95);
+}
+
+.chatContainer {
+    flex: 1;
+    max-width: none;
+    min-width: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, 
+        rgba(15, 20, 25, 0.95) 0%, 
+        rgba(25, 39, 52, 0.85) 50%, 
+        rgba(15, 20, 25, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    border-right: none;
+}
+
+/* Subtle animated background pattern matching Page.css */
+.chatContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 30%, rgba(29, 161, 242, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(29, 161, 242, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    animation: subtle-shift 30s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes subtle-shift {
+    0%, 100% { 
+        opacity: 0.6;
+        transform: scale(1) rotate(0deg);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.02) rotate(0.5deg);
+    }
+}
+
+/* Cover section with enhanced styling */
+.chatCover {
+    width: 100%;
+    height: clamp(120px, 20vh, 180px);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border-radius: 0 0 16px 16px;
+    box-shadow: 0 4px 20px var(--twitter-shadow-medium);
+}
+
+.chatCoverImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    filter: brightness(0.8) saturate(1.1);
+}
+
+.chatCover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60%;
+    background: linear-gradient(to top, 
+        rgba(15, 20, 25, 0.8) 0%, 
+        rgba(15, 20, 25, 0.4) 50%, 
+        transparent 100%);
+    pointer-events: none;
+}
+
+/* Professional chat header */
+.chatHeader {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 20px);
+    background: var(--chat-header-bg);
+    backdrop-filter: blur(20px);
+    color: var(--twitter-color);
+    padding: clamp(16px, 2.5vh, 24px) clamp(20px, 3vw, 32px);
+    font-size: clamp(16px, 2vw, 18px);
+    font-weight: 600;
+    position: relative;
+    z-index: 2;
+    border-bottom: 1px solid var(--twitter-border);
+    box-shadow: 0 2px 10px var(--twitter-shadow-light);
+}
+
+.chatHeader button {
+    background: rgba(29, 161, 242, 0.1);
+    color: var(--twitter-primary);
+    border: 1px solid rgba(29, 161, 242, 0.3);
+    padding: clamp(8px, 1vh, 12px) clamp(12px, 2vw, 16px);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: clamp(14px, 1.5vw, 16px);
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: fit-content;
+}
+
+.chatHeader button:hover {
+    background: rgba(29, 161, 242, 0.2);
+    border-color: rgba(29, 161, 242, 0.5);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+}
+
+.chatHeader button:active {
+    transform: translateY(0);
+}
+
+.chatProfileImage {
+    width: clamp(45px, 6vw, 60px);
+    height: clamp(45px, 6vw, 60px);
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(29, 161, 242, 0.3);
+    box-shadow: 0 4px 16px var(--twitter-shadow-medium);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.chatProfileImage:hover {
+    border-color: rgba(29, 161, 242, 0.5);
+    transform: scale(1.05);
+}
+
+.chatUserInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+}
+
+.chatUserInfo h3 {
+    margin: 0;
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 700;
+    color: var(--twitter-color);
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Enhanced messages section */
+.chatMessages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: clamp(16px, 2vh, 24px) clamp(16px, 2.5vw, 24px);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(8px, 1vh, 16px);
+    background: transparent;
+    position: relative;
+    z-index: 1;
+    scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for messages */
+.chatMessages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatMessages::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatMessages::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, 
+        rgba(29, 161, 242, 0.3) 0%, 
+        rgba(29, 161, 242, 0.1) 100%);
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+.chatMessages::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, 
+        rgba(29, 161, 242, 0.5) 0%, 
+        rgba(29, 161, 242, 0.3) 100%);
+    background-clip: content-box;
+}
+
+/* Professional message bubbles */
+.messageSent,
+.messageReceived {
+    max-width: clamp(250px, 65%, 400px);
+    padding: clamp(10px, 1.5vh, 16px) clamp(14px, 2vw, 20px);
+    border-radius: 20px;
+    font-size: clamp(14px, 1.5vw, 16px);
+    line-height: 1.5;
+    word-wrap: break-word;
+    position: relative;
+    animation: message-appear 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px var(--twitter-shadow-light);
+    backdrop-filter: blur(10px);
+}
+
+@keyframes message-appear {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.messageSent {
+    align-self: flex-end;
+    background: var(--chat-sent-bg);
+    color: white;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 3px 12px rgba(29, 161, 242, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.messageSent::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: -6px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-left-color: var(--twitter-primary);
+    border-bottom: none;
+    border-right: none;
+}
+
+.messageReceived {
+    align-self: flex-start;
+    background: var(--chat-received-bg);
+    backdrop-filter: blur(15px);
+    color: var(--twitter-color);
+    border-bottom-left-radius: 8px;
+    border: 1px solid var(--twitter-border);
+}
+
+.messageReceived::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: -6px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-right-color: var(--chat-received-bg);
+    border-bottom: none;
+    border-left: none;
+}
+
+.messageSent p,
+.messageReceived p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Enhanced input section */
+.chatInput {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 16px);
+    padding: clamp(16px, 2.5vh, 24px) clamp(16px, 2.5vw, 24px);
+    background: var(--chat-input-bg);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--twitter-border);
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 -2px 10px var(--twitter-shadow-light);
+}
+
+.chatInput input {
+    flex: 1;
+    padding: clamp(12px, 1.5vh, 16px) clamp(16px, 2vw, 20px);
+    background: rgba(56, 68, 77, 0.4);
+    border: 1px solid var(--twitter-border);
+    border-radius: 24px;
+    font-size: clamp(14px, 1.5vw, 16px);
+    color: var(--twitter-color);
+    outline: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: inherit;
+    backdrop-filter: blur(10px);
+    min-width: 0;
+}
+
+.chatInput input::placeholder {
+    color: var(--twitter-text-muted);
+    font-weight: 400;
+}
+
+.chatInput input:focus {
+    border-color: var(--twitter-primary);
+    box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.1);
+    background: rgba(56, 68, 77, 0.6);
+}
+
+.chatInput button {
+    background: var(--chat-sent-bg);
+    color: white;
+    border: none;
+    padding: clamp(12px, 1.5vh, 16px) clamp(20px, 2.5vw, 28px);
+    border-radius: 24px;
+    cursor: pointer;
+    font-size: clamp(14px, 1.5vw, 16px);
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+    min-width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: inherit;
+}
+
+.chatInput button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(29, 161, 242, 0.4);
+    background: linear-gradient(135deg, var(--twitter-primary-hover), #1580C7);
+}
+
+.chatInput button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(29, 161, 242, 0.3);
+}
+
+.chatInput button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsive design */
+@media (max-width: 950px) {
+    .chatContainer {
+        padding: 0;
+    }
+    
+    .chatHeader {
+        padding: 16px 20px;
+        gap: 16px;
+    }
+    
+    .chatMessages {
+        padding: 16px 20px;
+        gap: 12px;
+    }
+    
+    .chatInput {
+        padding: 16px 20px;
+        gap: 12px;
+    }
+    
+    .messageSent,
+    .messageReceived {
+        max-width: 75%;
+    }
+}
+
+@media (max-width: 768px) {
+    .chatCover {
+        height: 100px;
+    }
+    
+    .chatHeader {
+        padding: 14px 16px;
+        gap: 12px;
+    }
+    
+    .chatMessages {
+        padding: 12px 16px;
+        gap: 10px;
+    }
+    
+    .chatInput {
+        padding: 14px 16px;
+        gap: 10px;
+    }
+    
+    .messageSent,
+    .messageReceived {
+        max-width: 85%;
+        padding: 12px 16px;
+        font-size: 14px;
+    }
+    
+    .chatHeader button {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .chatHeader {
+        padding: 12px;
+        gap: 10px;
+    }
+    
+    .chatMessages {
+        padding: 12px;
+        gap: 8px;
+    }
+    
+    .chatInput {
+        padding: 12px;
+        gap: 8px;
+    }
+    
+    .messageSent,
+    .messageReceived {
+        max-width: 90%;
+        padding: 10px 14px;
+    }
+    
+    .chatInput input {
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+    
+    .chatInput button {
+        padding: 10px 16px;
+        font-size: 14px;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .chatContainer::before,
+    .messageSent,
+    .messageReceived,
+    .chatInput button,
+    .chatProfileImage {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* Focus states for accessibility */
+.chatInput input:focus,
+.chatInput button:focus,
+.chatHeader button:focus {
+    outline: 2px solid var(--twitter-primary);
+    outline-offset: 2px;
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+    .chatContainer {
+        background: linear-gradient(180deg, 
+            rgba(0, 0, 0, 0.98) 0%, 
+            rgba(15, 20, 25, 0.95) 50%, 
+            rgba(0, 0, 0, 0.98) 100%);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .messageSent {
+        background: var(--twitter-primary);
+        border: 2px solid white;
+    }
+    
+    .messageReceived {
+        background: var(--twitter-dark);
+        border: 2px solid var(--twitter-color);
+    }
+    
+    .chatInput input {
+        border: 2px solid var(--twitter-color);
+    }
+    
+    .chatContainer::before {
+        display: none;
+    }
+}
+
+/* Loading states */
+.chatMessages.loading {
+    opacity: 0.7;
+}
+
+.message-loading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--chat-received-bg);
+    border-radius: 20px;
+    max-width: 200px;
+    align-self: flex-start;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+}
+
+.typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--twitter-text-muted);
+    border-radius: 50%;
+    animation: typing 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+}

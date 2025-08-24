@@ -4,13 +4,12 @@ import "./Feed.css";
 import TweetBox from './TweetBox/TweetBox'
 import axios from 'axios'
 
-
 const Feed = () => {
   const [posts,setPosts]=useState([]);
   const [load,setLoad]=useState(false);
   
   useEffect(()=>{
-    fetch(`https://tweetmaster.onrender.com/post`).then(res=>res.json()).then(data=>{
+    fetch(`http://localhost:8002/post`).then(res=>res.json()).then(data=>{
       setLoad(true);
       setPosts(data);
     })
@@ -24,21 +23,30 @@ const Feed = () => {
     day="white";
     opp="rgb(2, 40, 57)";
   }
-    else{
-      day="black";
-      opp="white";
+  else{
+    day="black";
+    opp="white";
   }
 
   return (
     <div className="feed">
-    <div className="feed__header" style={{'backgroundColor':opp}}>
+      <div className="feed__header" style={{'backgroundColor':opp}}>
         <h2 style={{'color':day}}>Home</h2>
+      </div>
+      
+      <div className="feed__content">
+        <TweetBox />
+        {
+          load ? (
+            posts.map(p => <Post key={p._id} p={p}/>)
+          ) : (
+            <div className="feed__loading">
+              Loading posts...
+            </div>
+          )
+        }
+      </div>
     </div>
-    <TweetBox />
-    {
-        load?posts.map(p=><Post key={p._id} p={p}/>):"...Post is Loading"
-    }
-</div>
   )
 }
 

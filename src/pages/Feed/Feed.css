@@ -1,24 +1,291 @@
+/* Enhanced Feed.css with improved design */
+
 .feed {
-    flex: 0.6;
+    flex: 1; /* Changed from 0.6 to 1 for better space utilization */
     border-right: 1px solid var(--twitter-background);
     min-width: fit-content;
-    overflow-y: scroll;
-    backdrop-filter: blur(5px);
-  }
-  
-  .feed::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .feed__header {
+    overflow-y: auto; /* Changed from scroll to auto for better UX */
+    overflow-x: hidden;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: linear-gradient(180deg, 
+        rgba(15, 20, 25, 0.95) 0%, 
+        rgba(25, 39, 52, 0.85) 50%, 
+        rgba(15, 20, 25, 0.95) 100%);
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Subtle animated background */
+.feed::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 30%, rgba(29, 161, 242, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 70%, rgba(29, 161, 242, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    animation: feed-glow 20s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes feed-glow {
+    0%, 100% { 
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% { 
+        opacity: 1;
+        transform: scale(1.01);
+    }
+}
+
+/* Enhanced scrollbar */
+.feed::-webkit-scrollbar {
+    width: 8px;
+}
+
+.feed::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.feed::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, 
+        rgba(29, 161, 242, 0.4) 0%, 
+        rgba(29, 161, 242, 0.2) 100%);
+    border-radius: 12px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+}
+
+.feed::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, 
+        rgba(29, 161, 242, 0.6) 0%, 
+        rgba(29, 161, 242, 0.4) 100%);
+    background-clip: content-box;
+}
+
+/* Enhanced header */
+.feed__header {
     position: sticky;
     top: 0;
     z-index: 100;
-    border: 1px solid var(--twitter-background);
-    padding: 15px 30px;
-  }
-  
-  .feed__header>h2 {
-    font-size: 20px;
+    border-bottom: 1px solid var(--twitter-background);
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding: clamp(16px, 2vh, 24px) clamp(24px, 4vw, 40px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(15, 20, 25, 0.95);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Header background enhancement */
+.feed__header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, 
+        rgba(29, 161, 242, 0.05) 0%, 
+        transparent 50%, 
+        rgba(29, 161, 242, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feed__header:hover::before {
+    opacity: 1;
+}
+
+/* Enhanced header title */
+.feed__header > h2 {
+    font-size: clamp(20px, 3vw, 24px);
     font-weight: 800;
-  }
+    margin: 0;
+    letter-spacing: -0.5px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, 
+        currentColor 0%, 
+        #1DA1F2 50%, 
+        currentColor 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: header-gradient 8s ease-in-out infinite;
+    transition: all 0.3s ease;
+}
+
+@keyframes header-gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Loading state styling */
+.feed__loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(40px, 8vh, 80px) clamp(20px, 4vw, 40px);
+    color: #8B98A5;
+    font-size: clamp(16px, 2vw, 18px);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+}
+
+.feed__loading::before {
+    content: '';
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(29, 161, 242, 0.3);
+    border-top: 2px solid #1DA1F2;
+    border-radius: 50%;
+    animation: loading-spin 1s linear infinite;
+    margin-right: 12px;
+}
+
+@keyframes loading-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Content area */
+.feed__content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Enhanced hover effects */
+@media (hover: hover) and (pointer: fine) {
+    .feed:hover {
+        background: linear-gradient(180deg, 
+            rgba(15, 20, 25, 0.98) 0%, 
+            rgba(25, 39, 52, 0.9) 50%, 
+            rgba(15, 20, 25, 0.98) 100%);
+    }
+    
+    .feed:hover::before {
+        animation-duration: 15s;
+    }
+    
+    .feed__header:hover > h2 {
+        animation-duration: 4s;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 1200px) {
+    .feed__header {
+        padding: clamp(14px, 1.8vh, 20px) clamp(20px, 3.5vw, 32px);
+    }
+}
+
+@media (max-width: 768px) {
+    .feed {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .feed__header {
+        padding: clamp(12px, 1.5vh, 16px) clamp(16px, 3vw, 24px);
+    }
+    
+    .feed__header > h2 {
+        font-size: clamp(18px, 4vw, 22px);
+    }
+    
+    .feed__loading {
+        padding: clamp(30px, 6vh, 60px) clamp(16px, 3vw, 32px);
+    }
+    
+    /* Reduce animations for mobile performance */
+    .feed::before {
+        animation-duration: 30s;
+    }
+}
+
+@media (max-width: 480px) {
+    .feed__header {
+        padding: 12px 16px;
+    }
+    
+    .feed__header > h2 {
+        font-size: 18px;
+    }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .feed::before,
+    .feed__header > h2,
+    .feed__loading::before {
+        animation: none !important;
+    }
+    
+    .feed,
+    .feed__header {
+        transition: none !important;
+    }
+    
+    .feed__header > h2 {
+        background: currentColor;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        background-clip: unset;
+    }
+}
+
+/* Focus states for accessibility */
+.feed:focus-within {
+    outline: 2px solid #1DA1F2;
+    outline-offset: -2px;
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+    .feed {
+        background: linear-gradient(180deg, 
+            rgba(0, 0, 0, 0.98) 0%, 
+            rgba(15, 20, 25, 0.95) 50%, 
+            rgba(0, 0, 0, 0.98) 100%);
+    }
+    
+    .feed__header {
+        background: rgba(0, 0, 0, 0.98);
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .feed {
+        background: #0F1419;
+        border-right: 2px solid #1DA1F2;
+    }
+    
+    .feed::before {
+        display: none;
+    }
+    
+    .feed__header {
+        background: #0F1419;
+        border-bottom: 2px solid #1DA1F2;
+    }
+    
+    .feed__header > h2 {
+        background: currentColor;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        background-clip: unset;
+    }
+}

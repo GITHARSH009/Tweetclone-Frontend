@@ -3,17 +3,14 @@ import Sidebarsoptions from './Sidebarsoptions'
 import './Sidebars.css'
 import TwitterIcon from "@mui/icons-material/Twitter";
 import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import ListAltIcon from "@mui/icons-material/ListAlt";
 import PermIdentityIcon from "@mui/icons-material/PermIdentity";
-import MoreIcon from "@mui/icons-material/More"
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Divider from '@mui/material/Divider';
 import DoneIcon from '@mui/icons-material/Done';
-import Button from "@mui/material/Button";
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Avatar } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -60,9 +57,6 @@ const Sidebars = ({ handleLogout, user }) => {
       <Link style={{'color':day,'textDecoration':'None'}} to='/home'>
       <Sidebarsoptions active Icon={HomeIcon} text="Home" />
       </Link>
-      <CustomLink to='/Home/explore'>
-      <Sidebarsoptions Icon={SearchIcon} text="Explore" />
-      </CustomLink>
       <CustomLink to='/Home/notifications'>
       <Sidebarsoptions Icon={NotificationsNoneIcon} text="Notifications" />
       </CustomLink>
@@ -72,21 +66,15 @@ const Sidebars = ({ handleLogout, user }) => {
       <CustomLink to='/Home/bookmarks'>
       <Sidebarsoptions Icon={BookmarkBorderIcon} text="Bookmarks" />
       </CustomLink>
-      <CustomLink to='/Home/lists'>
-      <Sidebarsoptions Icon={ListAltIcon} text="Lists" />
-      </CustomLink>
       <CustomLink to='/Home/profile'>
       <Sidebarsoptions Icon={PermIdentityIcon} text="Profile" />
       </CustomLink>
-      <CustomLink to='/Home/more'>
-      <Sidebarsoptions Icon={MoreIcon} text="More" />
+      <CustomLink to='/Home/news'>
+      <Sidebarsoptions Icon={NewspaperIcon} text="News" />
       </CustomLink>
       <CustomLink to='/Home/plan'>
       <Sidebarsoptions Icon={PaidIcon} text="Subscription" />
       </CustomLink>
-      <Button variant="outlined" className="sidebar__tweet" fullWidth>
-        Tweet
-      </Button>
       <div className="Profile__info">
         <Avatar src={userprofilepic} />
         <div className="user__info">
@@ -126,7 +114,3 @@ const Sidebars = ({ handleLogout, user }) => {
 }
 
 export default Sidebars
-
-
-// blue=loggedInUser[0].bt;
-// {bt?<VerifiedUserIcon className="post__badge" />:''}

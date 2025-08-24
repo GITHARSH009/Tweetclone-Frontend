@@ -1,65 +1,467 @@
+/* Enhanced Professional Sidebars.css */
+
+:root {
+  --twitter-background: rgba(56, 68, 77, 0.3);
+  --twitter-color: #1DA1F2;
+  --twitter-hover: rgba(29, 161, 242, 0.1);
+  --twitter-hover-dark: rgba(29, 161, 242, 0.15);
+  --sidebar-bg: #0F1419;
+  --sidebar-bg-secondary: #192734;
+  --text-primary: #E7E9EA;
+  --text-secondary: #8B98A5;
+  --text-muted: #6E7681;
+  --border-color: rgba(56, 68, 77, 0.4);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-medium: rgba(0, 0, 0, 0.15);
+  --shadow-heavy: rgba(0, 0, 0, 0.25);
+  --gradient-primary: linear-gradient(135deg, #1DA1F2 0%, #1A91DA 100%);
+  --gradient-hover: linear-gradient(135deg, rgba(29, 161, 242, 0.15) 0%, rgba(29, 161, 242, 0.05) 100%);
+}
+
 .sidebar {
-    border-right: 1px solid var(--twitter-background);
-    flex: 0.3;
-    position: inherit;
-    min-width: 150px;
-    margin-top: 15px;
-    overflow-y: scroll;
+  border-right: 1px solid var(--border-color);
+  flex: 0.3;
+  position: relative;
+  min-width: 200px;
+  max-width: 280px;
+  padding: 20px 16px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, 
+    var(--sidebar-bg) 0%, 
+    var(--sidebar-bg-secondary) 50%, 
+    var(--sidebar-bg) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Subtle animated background */
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(29, 161, 242, 0.02) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(29, 161, 242, 0.015) 0%, transparent 50%);
+  pointer-events: none;
+  animation: sidebar-glow 15s ease-in-out infinite;
+}
+
+@keyframes sidebar-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Enhanced border effect */
+.sidebar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(180deg, 
+    transparent 0%, 
+    var(--twitter-color) 30%, 
+    var(--border-color) 50%, 
+    var(--twitter-color) 70%, 
+    transparent 100%);
+  opacity: 0.8;
+  animation: border-pulse 6s ease-in-out infinite;
+}
+
+@keyframes border-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Enhanced scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, 
+    rgba(29, 161, 242, 0.4) 0%, 
+    rgba(29, 161, 242, 0.2) 100%);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, 
+    rgba(29, 161, 242, 0.6) 0%, 
+    rgba(29, 161, 242, 0.4) 100%);
+  background-clip: content-box;
+}
+
+/* Enhanced Twitter Icon */
+.sidebar__twitterIcon {
+  color: var(--twitter-color);
+  font-size: 38px !important;
+  margin: 0 0 30px 12px;
+  padding: 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.1) 0%, 
+    rgba(29, 161, 242, 0.05) 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.15);
+}
+
+.sidebar__twitterIcon:hover {
+  background: linear-gradient(135deg, 
+    rgba(29, 161, 242, 0.2) 0%, 
+    rgba(29, 161, 242, 0.1) 100%);
+  transform: scale(1.05) rotate(5deg);
+  box-shadow: 0 8px 25px rgba(29, 161, 242, 0.25);
+}
+
+/* Enhanced Tweet Button */
+.sidebar__tweet {
+  background: var(--gradient-primary) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  text-transform: none !important;
+  border-radius: 25px !important;
+  height: 52px !important;
+  width: 100% !important;
+  margin: 20px 0 30px 0 !important;
+  box-shadow: 0 4px 14px rgba(29, 161, 242, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.sidebar__tweet::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.2) 50%, 
+    transparent 100%);
+  transition: left 0.5s ease;
+}
+
+.sidebar__tweet:hover::before {
+  left: 100%;
+}
+
+.sidebar__tweet:hover {
+  background: linear-gradient(135deg, #1A91DA 0%, #1580C7 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 25px rgba(29, 161, 242, 0.4) !important;
+}
+
+.sidebar__tweet:active {
+  transform: translateY(0) !important;
+  box-shadow: 0 4px 14px rgba(29, 161, 242, 0.3) !important;
+}
+
+/* Enhanced Profile Info Section */
+.sidebar > .Profile__info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: auto 0 20px 0;
+  border-radius: 20px;
+  padding: 16px 12px;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.03) 0%, 
+    rgba(255, 255, 255, 0.01) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.Profile__info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-hover);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.Profile__info:hover::before {
+  opacity: 1;
+}
+
+.Profile__info:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.06) 0%, 
+    rgba(255, 255, 255, 0.02) 100%);
+  border-color: rgba(29, 161, 242, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px var(--shadow-light);
+}
+
+/* Enhanced Avatar */
+.Profile__info .MuiAvatar-root {
+  width: 44px !important;
+  height: 44px !important;
+  border: 2px solid rgba(29, 161, 242, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.Profile__info:hover .MuiAvatar-root {
+  border-color: rgba(29, 161, 242, 0.6);
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+}
+
+/* Enhanced User Info */
+.user__info {
+  margin-left: 12px;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+
+.subUser__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.user__info > h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+  transition: color 0.2s ease;
+}
+
+.Profile__info:hover .user__info > h4 {
+  color: #FFFFFF;
+}
+
+.user__info > h5 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.Profile__info:hover .user__info > h5 {
+  color: var(--text-primary);
+  opacity: 1;
+}
+
+/* Enhanced More Button */
+.Profile__info .MuiIconButton-root {
+  color: var(--text-secondary) !important;
+  transition: all 0.2s ease !important;
+  border-radius: 50% !important;
+  position: relative;
+  z-index: 1;
+}
+
+.Profile__info:hover .MuiIconButton-root {
+  color: var(--text-primary) !important;
+  background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Enhanced Menu Styling */
+.Profile__info1 {
+  padding: 16px !important;
+  border-radius: 12px !important;
+  margin: 8px !important;
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.Profile__info1 .MuiAvatar-root {
+  width: 40px !important;
+  height: 40px !important;
+  border: 2px solid rgba(29, 161, 242, 0.4);
+  margin-right: 12px;
+}
+
+.done__icon {
+  color: var(--twitter-color) !important;
+  background: rgba(29, 161, 242, 0.1) !important;
+  border-radius: 50% !important;
+  padding: 4px !important;
+}
+
+/* Verified badge styling */
+.post__badge {
+  color: var(--twitter-color) !important;
+  font-size: 16px !important;
+  margin-left: 4px;
+  filter: drop-shadow(0 1px 2px rgba(29, 161, 242, 0.3));
+}
+
+/* Navigation links container */
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 20px 0;
+}
+
+/* Enhanced responsive design */
+@media screen and (max-width: 1200px) {
+  .sidebar {
+    min-width: 180px;
+    max-width: 220px;
+    padding: 20px 12px;
   }
-  
-  .sidebar::-webkit-scrollbar{
-    display: none;
+}
+
+@media screen and (max-width: 950px) {
+  .sidebar {
+    min-width: 68px;
+    max-width: 68px;
+    padding: 20px 8px;
   }
   
   .sidebar__twitterIcon {
-    color: var(--twitter-color);
-    font-size: 35px !important;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    margin: 0 0 30px 0;
+    font-size: 32px !important;
   }
   
   .sidebar__tweet {
-    background-color: var(--twitter-color) !important;
-    border: none !important;
-    color: white !important;
-    font-weight: 900 !important;
-    text-transform: inherit !important;
-    border-radius: 30px !important;
-    height: 50px !important;
-    margin-top: 10px !important;
+    width: 52px !important;
+    height: 52px !important;
+    border-radius: 50% !important;
+    padding: 0 !important;
+    min-width: auto !important;
   }
   
-  .sidebar>.Profile__info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    border-radius: 9999px;
-    padding: 10px;
+  .Profile__info {
+    flex-direction: column !important;
+    padding: 12px 8px !important;
   }
   
-  .user__info {
-    margin-left: 10px;
+  .Profile__info .user__info {
+    display: none;
   }
   
-  .subUser__info {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
+  .Profile__info .MuiIconButton-root {
+    margin: 8px 0 0 0 !important;
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Hover effects for desktop only */
+@media (hover: hover) {
+  .sidebar:hover {
+    background: linear-gradient(180deg, 
+      rgba(15, 20, 25, 0.98) 0%, 
+      rgba(25, 39, 52, 0.95) 50%, 
+      rgba(15, 20, 25, 0.98) 100%);
   }
   
-  .user__info>h4 {
-    font-size: 20px;
+  .sidebar:hover::before {
+    animation-duration: 10s;
   }
   
-  .user__info>h5 {
-    opacity: 90%;
+  .sidebar:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar::before,
+  .sidebar::after,
+  .sidebar__twitterIcon,
+  .sidebar__tweet,
+  .Profile__info {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Focus states for accessibility */
+.sidebar__twitterIcon:focus,
+.sidebar__tweet:focus,
+.Profile__info:focus {
+  outline: 2px solid var(--twitter-color);
+  outline-offset: 2px;
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: linear-gradient(180deg, 
+      #000000 0%, 
+      var(--sidebar-bg) 50%, 
+      #000000 100%);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .sidebar {
+    border-right: 2px solid var(--twitter-color);
+    background: var(--sidebar-bg);
   }
   
-  @media screen and (max-width:688px) {
-    .sidebar {
-      display: none;
-    }
+  .sidebar::before,
+  .sidebar::after {
+    display: none;
   }
+}
+
+/* Loading state */
+.sidebar.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.sidebar.loading::before {
+  animation-duration: 1s;
+}

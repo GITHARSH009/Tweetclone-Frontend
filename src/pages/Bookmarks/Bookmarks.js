@@ -1,7 +1,7 @@
 import React from 'react'
 import "../Page.css"
 
-const Bookmarks = () => {
+const More = () => {
   return (
     <div className='page'>
             <h2 className='pageTitle'>Welcome to Bookmark page</h2>
@@ -9,4 +9,4 @@ const Bookmarks = () => {
   )
 }
 
-export default Bookmarks
+export default More

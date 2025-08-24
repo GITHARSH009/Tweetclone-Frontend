@@ -1,0 +1,340 @@
+/* Enhanced Message.css - Consistent with Page.css design */
+
+.messagePage {
+    flex: 1; /* Updated to match new page design */
+    min-width: 0;
+    padding: 0 clamp(24px, 4vw, 80px); /* Consistent with page.css */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(180deg, 
+        rgba(15, 20, 25, 0.95) 0%, 
+        rgba(25, 39, 52, 0.85) 50%, 
+        rgba(15, 20, 25, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Add subtle background animation like page.css */
+.messagePage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 35%, rgba(29, 161, 242, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 75% 65%, rgba(29, 161, 242, 0.02) 0%, transparent 50%);
+    pointer-events: none;
+    animation: subtle-shift 20s ease-in-out infinite;
+}
+
+@keyframes subtle-shift {
+    0%, 100% { 
+        opacity: 0.8;
+        transform: translateY(0);
+    }
+    50% { 
+        opacity: 1;
+        transform: translateY(-5px);
+    }
+}
+
+.messagePage::-webkit-scrollbar {
+    display: none;
+}
+
+.pageTitle {
+    color: var(--twitter-color);
+    text-align: left;
+    font-size: clamp(28px, 4.5vw, 36px);
+    font-weight: 800;
+    margin: 0 0 clamp(20px, 3vh, 30px) 0;
+    padding: clamp(20px, 3vh, 28px) 0 0 0;
+    letter-spacing: -0.8px;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(135deg, 
+        var(--twitter-color) 0%, 
+        var(--twitter-primary) 50%, 
+        var(--twitter-color) 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradient-shift 6s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.chatList {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 20px;
+}
+
+.chatList::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chatList::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatList::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, 
+        rgba(29, 161, 242, 0.4) 0%, 
+        rgba(29, 161, 242, 0.2) 100%);
+    border-radius: 10px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+}
+
+.chatItem {
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 16px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.chatItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(29, 161, 242, 0.1) 0%, 
+        rgba(29, 161, 242, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.chatItem:hover::before {
+    opacity: 1;
+}
+
+.chatItem:hover {
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.08) 0%, 
+        rgba(255, 255, 255, 0.04) 100%);
+    border-color: rgba(29, 161, 242, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.chatItem:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chatProfile {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 16px;
+    border: 2px solid rgba(29, 161, 242, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    object-fit: cover;
+}
+
+.chatItem:hover .chatProfile {
+    border-color: rgba(29, 161, 242, 0.6);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.2);
+}
+
+.chatInfo {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.chatInfo h3 {
+    margin: 0 0 4px 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+    transition: color 0.2s ease;
+}
+
+.chatItem:hover .chatInfo h3 {
+    color: #FFFFFF;
+}
+
+.chatInfo p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    opacity: 0.9;
+    transition: all 0.2s ease;
+}
+
+.chatItem:hover .chatInfo p {
+    color: var(--text-primary);
+    opacity: 1;
+}
+
+/* Enhanced responsive design */
+@media (max-width: 1200px) {
+    .messagePage {
+        padding: 0 clamp(20px, 3vw, 60px);
+    }
+    
+    .pageTitle {
+        font-size: clamp(26px, 4vw, 32px);
+    }
+}
+
+@media (max-width: 768px) {
+    .messagePage {
+        padding: 0 clamp(16px, 4vw, 32px);
+        height: auto;
+        min-height: 100vh;
+    }
+    
+    .pageTitle {
+        font-size: clamp(22px, 5vw, 28px);
+        margin-bottom: clamp(16px, 2vh, 24px);
+        padding-top: clamp(16px, 2vh, 20px);
+    }
+    
+    .chatItem {
+        padding: 14px;
+        border-radius: 12px;
+    }
+    
+    .chatProfile {
+        width: 44px;
+        height: 44px;
+        margin-right: 14px;
+    }
+    
+    .chatInfo h3 {
+        font-size: 15px;
+    }
+    
+    .chatInfo p {
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .messagePage {
+        padding: 0 16px;
+    }
+    
+    .pageTitle {
+        font-size: 24px;
+        margin-bottom: 16px;
+        padding-top: 12px;
+    }
+    
+    .chatItem {
+        padding: 12px;
+        border-radius: 10px;
+    }
+    
+    .chatProfile {
+        width: 40px;
+        height: 40px;
+        margin-right: 12px;
+    }
+    
+    .chatInfo h3 {
+        font-size: 14px;
+    }
+    
+    .chatInfo p {
+        font-size: 12px;
+    }
+}
+
+/* Loading state for chat items */
+.chatItem.loading {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Empty state styling */
+.chatList:empty::after {
+    content: 'No messages yet';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Focus states for accessibility */
+.chatItem:focus {
+    outline: 2px solid var(--twitter-primary);
+    outline-offset: 2px;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+    .messagePage::before,
+    .pageTitle,
+    .chatItem,
+    .chatProfile {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .pageTitle {
+        background: var(--twitter-color);
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        background-clip: unset;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .messagePage {
+        background: var(--twitter-dark);
+    }
+    
+    .messagePage::before {
+        display: none;
+    }
+    
+    .chatItem {
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid var(--twitter-primary);
+    }
+}
