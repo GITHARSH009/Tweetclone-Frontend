@@ -16,7 +16,7 @@ const Notifications = () => {
         if (!email) return; // Prevent API call if email is undefined
         
         setLoading(true);
-        fetch(`http://localhost:8002/notifications/${email}`)
+        fetch(`https://tweetmaster.onrender.com/notifications/${email}`)
             .then(res => res.json())
             .then(data => {
                 setNotifications(data);

@@ -28,7 +28,7 @@ const Signup = () => {
         try {
             await signUp(email, password);
             const user = { Username: username, Name: name, Email: email };
-            fetch("http://localhost:8002/register", {
+            fetch("https://tweetmaster.onrender.com/register", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(user),

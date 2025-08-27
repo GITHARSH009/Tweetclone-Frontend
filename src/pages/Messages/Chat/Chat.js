@@ -33,7 +33,7 @@ const Chat = () => {
 
     useEffect(() => {
         // Fetch chat user's details using the API
-        fetch(`http://localhost:8002/loggedInUser?email=${chatUserEmail}`)
+        fetch(`https://tweetmaster.onrender.com/loggedInUser?email=${chatUserEmail}`)
             .then(res => res.json())
             .then(data => {
                 if (data && data.length > 0) {
