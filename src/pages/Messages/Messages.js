@@ -16,7 +16,7 @@ const Messages = () => {
 
     useEffect(() => {
         if (email) {
-            axios.get(`http://localhost:8002/getuser/${email}`)
+            axios.get(`https://tweetmaster.onrender.com/getuser/${email}`)
                 .then(response => setUsers(response.data))
                 .catch(error => console.error("Error fetching users:", error));
         }

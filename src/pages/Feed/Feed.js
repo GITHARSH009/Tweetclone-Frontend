@@ -9,7 +9,7 @@ const Feed = () => {
   const [load,setLoad]=useState(false);
   
   useEffect(()=>{
-    fetch(`http://localhost:8002/post`).then(res=>res.json()).then(data=>{
+    fetch(`https://tweetmaster.onrender.com/post`).then(res=>res.json()).then(data=>{
       setLoad(true);
       setPosts(data);
     })

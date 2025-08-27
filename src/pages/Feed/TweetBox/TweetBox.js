@@ -36,7 +36,7 @@ const TweetBox = () => {
                 bt: 0,
                 Exp: nextMonth,
             };
-            fetch(`http://localhost:8002/exp/${email}`, {
+            fetch(`https://tweetmaster.onrender.com/exp/${email}`, {
                 method: "PATCH",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(update),
@@ -48,7 +48,7 @@ const TweetBox = () => {
     // Fetch user details
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:8002/loggedInUser?email=${email}`)
+            fetch(`https://tweetmaster.onrender.com/loggedInUser?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     setName(data[0]?.Name || "");
@@ -103,7 +103,7 @@ const TweetBox = () => {
 
             // Send post request
             try {
-                const response = await fetch("http://localhost:8002/post", {
+                const response = await fetch("https://tweetmaster.onrender.com/post", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify(userPost),
@@ -114,14 +114,14 @@ const TweetBox = () => {
                 // Decrease post count
                 const updatedCount = postLimit - 1;
                 setPostLimit(updatedCount);
-                fetch(`http://localhost:8002/updone/${email}`, {
+                fetch(`https://tweetmaster.onrender.com/updone/${email}`, {
                     method: "PATCH",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({ count: updatedCount }),
                 });
 
                 // Send Kafka Notification
-                await fetch("http://localhost:8002/notifications", {
+                await fetch("https://tweetmaster.onrender.com/notifications", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({ notifyTo: "everyone", message: `${username} has made a post on ChatTown` }), // Send to a specific user
