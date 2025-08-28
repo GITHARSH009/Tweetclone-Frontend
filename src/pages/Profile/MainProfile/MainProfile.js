@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './MainProfile.css';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
@@ -12,8 +12,6 @@ import axios from "axios";
 import Useloggedinuser from '../../../hooks/useloggedinuser';
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser"
 
-
-
 const MainProfile = ({ user }) => {
   const navigate = useNavigate();
   // const [imageURL, setImageURL] = useState('');
@@ -26,12 +24,17 @@ const MainProfile = ({ user }) => {
   const username = user?.email?.split('@')[0];
 
   useEffect(() => {
-    fetch(`https://tweetmaster.onrender.com/post_detail?email= ${email}`)
-    .then(res => res.json())
-    .then(data => {
-      setPosts(data);
-    })
-  }, [posts])
+    if (email) {
+      fetch(`https://tweetmaster.onrender.com/post_detail?email= ${email}`)
+      .then(res => res.json())
+      .then(data => {
+        setPosts(data);
+      })
+      .catch(error => {
+        console.error('Error fetching posts:', error);
+      });
+    }
+  }, [email]) // Removed 'posts' from dependency array to prevent infinite loop
 
    function handleurl(){
       const url=loggedInUser[0].website;
@@ -191,7 +194,7 @@ const MainProfile = ({ user }) => {
                 <hr />
               </div>
               {
-                posts.map(p => <Post p={p} />)
+                posts.map(p => <Post key={p._id || p.id} p={p} />)
               }
             </div>
           }

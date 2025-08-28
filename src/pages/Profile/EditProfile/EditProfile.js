@@ -4,7 +4,7 @@ import Button from '@mui/material/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import { Avatar } from "@mui/material";
+// import { Avatar } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import './EditProfile.css';

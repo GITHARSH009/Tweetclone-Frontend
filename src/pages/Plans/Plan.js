@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import "./Plan.css";
 import "../Page.css"; // Import the provided page.css
 
 const Plan = () => {
-  const [user] = useState({ email: 'user@example.com' }); // Mock user for demo
+  // const [user] = useState({ email: 'user@example.com' }); // Mock user for demo
   const [selectedPlan, setSelectedPlan] = useState(null);
-  const email = user?.email;
+  // const email = user?.email;
 
   const checkouthandler = async (amount) => {
     setSelectedPlan(amount);

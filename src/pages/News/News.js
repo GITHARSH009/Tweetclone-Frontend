@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import "../Page.css";
 import "./News.css";
 
@@ -13,7 +13,7 @@ const News = () => {
   const API_KEY = process.env.REACT_APP_NEWS_API_KEY || 'ef368ade7b534bb8b8da8102e369cbf9';
   const BASE_URL = 'https://newsapi.org/v2/everything?q=';
 
-  const fetchNews = async (query) => {
+  const fetchNews = useCallback(async (query) => {
     try {
       setLoading(true);
       setError(null);
@@ -38,11 +38,11 @@ const News = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [API_KEY, BASE_URL]);
 
   useEffect(() => {
     fetchNews(currentQuery);
-  }, [currentQuery]);
+  }, [currentQuery, fetchNews]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
