@@ -1,36 +1,47 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Post from "../Feed/Post/Post";
 import "./Feed.css";
 import TweetBox from './TweetBox/TweetBox'
+import useUserAuth from "../../Context/UserAuthContext";
 
 const Feed = () => {
-  const [posts,setPosts]=useState([]);
-  const [load,setLoad]=useState(false);
+  const [posts, setPosts] = useState([]);
+  const [load, setLoad] = useState(false);
+  const { makeAuthenticatedRequest } = useUserAuth();
   
-  useEffect(()=>{
-    fetch(`https://tweetmaster.onrender.com/post`).then(res=>res.json()).then(data=>{
-      setLoad(true);
-      setPosts(data);
-    })
-  },[posts])
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await makeAuthenticatedRequest(`https://tweetmaster.onrender.com/post`);
+        const data = await response.json();
+        setLoad(true);
+        setPosts(data);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        setLoad(true); // Still set load to true to stop loading spinner
+      }
+    };
+    
+    fetchPosts();
+  }, [makeAuthenticatedRequest]); // Include makeAuthenticatedRequest to satisfy ESLint
 
-  const date=new Date();
-  const h=date.getHours();
-  var day="black";
-  var opp="white"
-  if(h>=19 || h<6){
-    day="white";
-    opp="rgb(2, 40, 57)";
+  const date = new Date();
+  const h = date.getHours();
+  var day = "black";
+  var opp = "white"
+  if (h >= 19 || h < 6) {
+    day = "white";
+    opp = "rgb(2, 40, 57)";
   }
-  else{
-    day="black";
-    opp="white";
+  else {
+    day = "black";
+    opp = "white";
   }
 
   return (
     <div className="feed">
-      <div className="feed__header" style={{'backgroundColor':opp}}>
-        <h2 style={{'color':day}}>Home</h2>
+      <div className="feed__header" style={{'backgroundColor': opp}}>
+        <h2 style={{'color': day}}>Home</h2>
       </div>
       
       <div className="feed__content">

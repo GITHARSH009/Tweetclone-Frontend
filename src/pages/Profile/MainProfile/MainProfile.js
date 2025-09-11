@@ -11,12 +11,14 @@ import EditProfile from '../EditProfile/EditProfile';
 import axios from "axios";
 import Useloggedinuser from '../../../hooks/useloggedinuser';
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser"
+import useUserAuth from '../../../Context/UserAuthContext';
 
 const MainProfile = ({ user }) => {
   const navigate = useNavigate();
   // const [imageURL, setImageURL] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loggedInUser] = Useloggedinuser();
+  const { makeAuthenticatedRequest } = useUserAuth();
   const email=user?user.email:loggedInUser?.email;
   const blue=loggedInUser[0]?.bt;
 
@@ -25,7 +27,7 @@ const MainProfile = ({ user }) => {
 
   useEffect(() => {
     if (email) {
-      fetch(`https://tweetmaster.onrender.com/post_detail?email= ${email}`)
+      makeAuthenticatedRequest(`https://tweetmaster.onrender.com/post_detail?email= ${email}`)
       .then(res => res.json())
       .then(data => {
         setPosts(data);
@@ -34,7 +36,7 @@ const MainProfile = ({ user }) => {
         console.error('Error fetching posts:', error);
       });
     }
-  }, [email]) // Removed 'posts' from dependency array to prevent infinite loop
+  }, [email, makeAuthenticatedRequest]) // Removed 'posts' from dependency array to prevent infinite loop
 
    function handleurl(){
       const url=loggedInUser[0].website;
@@ -61,7 +63,7 @@ const MainProfile = ({ user }) => {
         }
         setIsLoading(false)
         if (url) {
-          fetch(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
+          makeAuthenticatedRequest(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
             method: "PATCH",
             headers: {
               'content-type': 'application/json'
@@ -101,7 +103,7 @@ const MainProfile = ({ user }) => {
         }
         setIsLoading(false)
         if (url) {
-          fetch(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
+          makeAuthenticatedRequest(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
             method: "PATCH",
             headers: {
               'content-type': 'application/json'

@@ -3,6 +3,7 @@ import "../Page.css";
 import Useloggedinuser from '../../hooks/useloggedinuser';
 import { auth } from '../../firebase.init';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import useUserAuth from '../../Context/UserAuthContext';
 import "./Notification.css";
 
 const Notifications = () => {
@@ -10,13 +11,14 @@ const Notifications = () => {
     const [loading, setLoading] = useState(true);
     const [user] = useAuthState(auth);
     const [loggedInUser] = Useloggedinuser();
+    const { makeAuthenticatedRequest } = useUserAuth();
     const email = user ? user.email : loggedInUser?.email;
 
     useEffect(() => {
         if (!email) return; // Prevent API call if email is undefined
         
         setLoading(true);
-        fetch(`https://tweetmaster.onrender.com/notifications/${email}`)
+        makeAuthenticatedRequest(`https://tweetmaster.onrender.com/notifications/${email}`)
             .then(res => res.json())
             .then(data => {
                 setNotifications(data);
@@ -26,7 +28,7 @@ const Notifications = () => {
                 console.error("Error fetching notifications:", err);
                 setLoading(false);
             });
-    }, [email]);
+    }, [email, makeAuthenticatedRequest]);
 
     // Function to format timestamp
     const formatTime = (timestamp) => {

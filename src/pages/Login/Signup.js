@@ -1,4 +1,3 @@
-/* Signup.js */
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import GoogleButton from "react-google-button";
@@ -26,14 +25,32 @@ const Signup = () => {
         e.preventDefault();
         setError("");
         try {
-            await signUp(email, password);
+            // First, create user with Firebase
+            const userCredential = await signUp(email, password);
+            
+            // Get the ID token immediately after successful signup
+            const idToken = await userCredential.user.getIdToken();
+            
+            // Then register user data in your backend using the token
             const user = { Username: username, Name: name, Email: email };
-            fetch("https://tweetmaster.onrender.com/register", {
+            
+            const response = await fetch("https://tweetmaster.onrender.com/register", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${idToken}`
+                },
                 body: JSON.stringify(user),
-            }).then((res) => res.json()).then((data) => console.log(data));
-            navigate("/login");
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('User registered in backend:', data);
+                navigate("/login");
+            } else {
+                throw new Error('Failed to register user in backend');
+            }
+            
         } catch (err) {
             setError(err.message);
             window.alert(err.message);
@@ -43,7 +60,34 @@ const Signup = () => {
     const handleGoogleSignIn = async (e) => {
         e.preventDefault();
         try {
-            await googleSignIn();
+            const result = await googleSignIn();
+            
+            // Get the ID token immediately after successful Google sign-in
+            const idToken = await result.user.getIdToken();
+            
+            // Register Google user in backend
+            const user = {
+                Username: result.user.displayName?.replace(/\s+/g, '').toLowerCase() || result.user.email?.split('@')[0],
+                Name: result.user.displayName || '',
+                Email: result.user.email
+            };
+            
+            const response = await fetch("https://tweetmaster.onrender.com/register", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${idToken}`
+                },
+                body: JSON.stringify(user),
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Google user registered in backend:', data);
+            } else {
+                console.error('Failed to register Google user in backend');
+            }
+            
             navigate("/");
         } catch (error) {
             console.log(error.message);
@@ -61,10 +105,34 @@ const Signup = () => {
                 <Switch checked={darkMode} onChange={() => setDarkMode(!darkMode)} />
                 {error && <p className="error-message">{error}</p>}
                 <form onSubmit={handleSubmit}>
-                    <input type="text" placeholder="@username" onChange={(e) => setUsername(e.target.value)} />
-                    <input type="text" placeholder="Full Name" onChange={(e) => setName(e.target.value)} />
-                    <input type="email" placeholder="Email address" onChange={(e) => setEmail(e.target.value)} />
-                    <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                    <input 
+                        type="text" 
+                        placeholder="@username" 
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)} 
+                        required
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Full Name" 
+                        value={name}
+                        onChange={(e) => setName(e.target.value)} 
+                        required
+                    />
+                    <input 
+                        type="email" 
+                        placeholder="Email address" 
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} 
+                        required
+                    />
+                    <input 
+                        type="password" 
+                        placeholder="Password" 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)} 
+                        required
+                    />
                     <button type="submit" className="btn">Sign Up</button>
                 </form>
                 <hr />

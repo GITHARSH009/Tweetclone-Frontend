@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import TextField from '@mui/material/TextField';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import './EditProfile.css';
+import useUserAuth from '../../../Context/UserAuthContext';
 
 
 const style = {
@@ -72,6 +73,7 @@ export default function EditProfile({ user, loggedInUser }) {
   const [website, setWebsite] = React.useState('');
   const [open, setOpen] = React.useState(false)
   const [dob, setDob] = React.useState('')
+  const { makeAuthenticatedRequest } = useUserAuth();
 
 
   const HandleSave = () => {
@@ -83,7 +85,7 @@ export default function EditProfile({ user, loggedInUser }) {
       dob,
     }
     console.log(editedInfo);
-    fetch(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
+    makeAuthenticatedRequest(`https://tweetmaster.onrender.com/userUpdates/${user?.email}`, {
       method: "PATCH",
       headers: {
         'content-type': 'application/json'

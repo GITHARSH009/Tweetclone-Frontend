@@ -6,6 +6,7 @@ import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternate
 import Useloggedinuser from "../../../hooks/useloggedinuser";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../../firebase.init";
+import useUserAuth from "../../../Context/UserAuthContext";
 
 const TweetBox = () => {
     const [user] = useAuthState(auth);
@@ -17,6 +18,7 @@ const TweetBox = () => {
     const [username, setUsername] = useState("");
     const [blue, setBlue] = useState(0);
     const [postLimit, setPostLimit] = useState(0);
+    const { makeAuthenticatedRequest } = useUserAuth();
 
     const email = user?.email;
     const userProfilePic = loggedInUser[0]?.profileImage || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
@@ -36,19 +38,19 @@ const TweetBox = () => {
                 bt: 0,
                 Exp: nextMonth,
             };
-            fetch(`https://tweetmaster.onrender.com/exp/${email}`, {
+            makeAuthenticatedRequest(`https://tweetmaster.onrender.com/exp/${email}`, {
                 method: "PATCH",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify(update),
             }).then(res => res.json())
               .then(data => console.log(data));
         }
-    }, [email, currentMonth, nextMonth, todayDate,expDate]);
+    }, [email, currentMonth, nextMonth, todayDate, expDate, makeAuthenticatedRequest]);
 
     // Fetch user details
     useEffect(() => {
         if (email) {
-            fetch(`https://tweetmaster.onrender.com/loggedInUser?email=${email}`)
+            makeAuthenticatedRequest(`https://tweetmaster.onrender.com/loggedInUser?email=${email}`)
                 .then(res => res.json())
                 .then(data => {
                     setName(data[0]?.Name || "");
@@ -57,7 +59,7 @@ const TweetBox = () => {
                     setPostLimit(data[0]?.count || 0);
                 });
         }
-    }, [email]);
+    }, [email, makeAuthenticatedRequest]);
 
     // Handle Image Upload
     const handleUploadImage = (e) => {
@@ -103,7 +105,7 @@ const TweetBox = () => {
 
             // Send post request
             try {
-                const response = await fetch("https://tweetmaster.onrender.com/post", {
+                const response = await makeAuthenticatedRequest("https://tweetmaster.onrender.com/post", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify(userPost),
@@ -114,14 +116,14 @@ const TweetBox = () => {
                 // Decrease post count
                 const updatedCount = postLimit - 1;
                 setPostLimit(updatedCount);
-                fetch(`https://tweetmaster.onrender.com/updone/${email}`, {
+                makeAuthenticatedRequest(`https://tweetmaster.onrender.com/updone/${email}`, {
                     method: "PATCH",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({ count: updatedCount }),
                 });
 
                 // Send Kafka Notification
-                await fetch("https://tweetmaster.onrender.com/notifications", {
+                await makeAuthenticatedRequest("https://tweetmaster.onrender.com/notifications", {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({ notifyTo: "everyone", message: `${username} has made a post on ChatTown` }), // Send to a specific user

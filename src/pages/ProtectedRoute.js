@@ -1,21 +1,20 @@
 import React from 'react'
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navigate } from 'react-router-dom';
-import {auth} from '../firebase.init';
+import useUserAuth from '../Context/UserAuthContext'; // Updated import
 import { PageLoading } from './Login/PageLoading';
 
 const ProtectedRoute = ({children}) => {
-    const [user, loading, error] = useAuthState(auth);
+    const { user, loading } = useUserAuth(); // Using our UserAuthContext instead
+    
     if(loading){
         return <PageLoading/>
     }
-    if(error){
-        console.log(error.message);
-    }
+    
     if(!user){
         return <Navigate to='/login'/>
     }
-  return children;
+    
+    return children;
 };
 
 export default ProtectedRoute
