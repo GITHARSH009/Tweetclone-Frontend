@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import "../Page.css";
 import "./News.css";
 
@@ -9,16 +9,12 @@ const News = () => {
   const [currentQuery, setCurrentQuery] = useState('India');
   const [error, setError] = useState(null);
 
-  // Replace with your actual News API key
-  const API_KEY = process.env.REACT_APP_NEWS_API_KEY || 'ef368ade7b534bb8b8da8102e369cbf9';
-  const BASE_URL = 'https://newsapi.org/v2/everything?q=';
-
-  const fetchNews = useCallback(async (query) => {
+  const fetchNews = async (query) => {
     try {
       setLoading(true);
       setError(null);
       
-      const response = await fetch(`${BASE_URL}${query}&apiKey=${API_KEY}&pageSize=20&sortBy=publishedAt`);
+      const response = await fetch(`https://tweetmaster.onrender.com/news?q=${encodeURIComponent(query)}&pageSize=20`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -26,23 +22,19 @@ const News = () => {
       
       const data = await response.json();
       
-      // Filter articles with images and valid content
-      const filteredArticles = data.articles.filter(
-        article => article.urlToImage && article.title && article.description
-      );
-      
-      setArticles(filteredArticles);
+      // The backend already filters articles, but you can add additional filtering if needed
+      setArticles(data.articles || []);
     } catch (err) {
       setError('Failed to fetch news. Please try again later.');
       console.error('News fetch error:', err);
     } finally {
       setLoading(false);
     }
-  }, [API_KEY, BASE_URL]);
+  };
 
   useEffect(() => {
     fetchNews(currentQuery);
-  }, [currentQuery, fetchNews]);
+  }, [currentQuery]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
