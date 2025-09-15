@@ -14,13 +14,6 @@ const Movies = () => {
       setLoading(true);
       setError(null);
       
-      let endpoint = '';
-      if (query.trim()) {
-        endpoint = `search/movie?query=${encodeURIComponent(query)}`;
-      } else {
-        endpoint = `movie/${category}`;
-      }
-      
       const response = await fetch(`https://tweetmaster.onrender.com/movies?category=${category}&query=${encodeURIComponent(query)}`);
       
       if (!response.ok) {
