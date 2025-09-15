@@ -9,7 +9,7 @@ import ProtectedRoute from './pages/ProtectedRoute';
 import { PageLoading } from './pages/Login/PageLoading';
 import Notifications from './pages/Notifications/Notifications';
 import Messages from './pages/Messages/Messages';
-import Bookmarks from './pages/Bookmarks/Bookmarks';
+import Movies from './pages/Movies/Movies';
 import Profile from './pages/Profile/Profile';
 import Feed from './pages/Feed/Feed';
 import { Result } from './pages/Plans/Result';
@@ -34,7 +34,7 @@ function App() {
         <Route path='notifications' element={<Notifications/>}/>
         <Route path='messages' element={<Messages/>}/>
         <Route path="/Home/messages/chat/:chatUserEmail" element={<Chat />} />
-        <Route path='bookmarks' element={<Bookmarks/>}/>
+        <Route path='movies' element={<Movies/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='plan' element={<Plan/>}/>
         <Route path='paymentsuccess' element={<Result/>}/>

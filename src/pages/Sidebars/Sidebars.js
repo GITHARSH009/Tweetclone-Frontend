@@ -63,8 +63,8 @@ const Sidebars = ({ handleLogout, user }) => {
       <CustomLink to='/Home/messages'>
       <Sidebarsoptions Icon={MailOutlineIcon} text="Messages" />
       </CustomLink>
-      <CustomLink to='/Home/bookmarks'>
-      <Sidebarsoptions Icon={BookmarkBorderIcon} text="Bookmarks" />
+      <CustomLink to='/Home/movies'>
+      <Sidebarsoptions Icon={BookmarkBorderIcon} text="Movies" />
       </CustomLink>
       <CustomLink to='/Home/profile'>
       <Sidebarsoptions Icon={PermIdentityIcon} text="Profile" />
