@@ -254,7 +254,8 @@
   }
   
   .sidebarOptions > h2 {
-    display: none;
+    display: flex;
+    flex-direction: column;
   }
   
   .sidebarOptions > .MuiSvgIcon-root {
@@ -312,7 +313,8 @@
 
 @media screen and (max-width: 688px) {
   .sidebarOptions {
-    display: none;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -353,7 +355,8 @@
   }
   
   .sidebarOptions::before {
-    display: none;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -364,4 +367,100 @@
     box-shadow: none !important;
     border: 1px solid #ccc !important;
   }
+}
+/* Add these fixes to your existing sidebaroptions.css */
+
+/* Override mobile styles for hamburger menu */
+@media (max-width: 768px) {
+    /* When mobile sidebar is open, show full sidebar options */
+    .mobile-open .sidebarOptions {
+        display: flex !important;
+        flex-direction: row !important; /* Horizontal layout for icon + text */
+        align-items: center !important;
+        padding: 12px 16px !important;
+        margin: 2px 0 !important;
+        width: auto !important;
+        height: auto !important;
+        border-radius: 20px !important;
+        justify-content: flex-start !important; /* Align items to start */
+    }
+    
+    /* Show text labels in mobile menu */
+    .mobile-open .sidebarOptions > h2 {
+        display: block !important;
+        font-size: 17px !important;
+        margin: 0 !important;
+        color: var(--text-primary) !important;
+        flex: 1 !important;
+    }
+    
+    /* Icon styling for mobile menu */
+    .mobile-open .sidebarOptions > .MuiSvgIcon-root {
+        font-size: 26px !important;
+        margin-right: 12px !important;
+        padding: 8px !important;
+        border-radius: 50% !important;
+        background: linear-gradient(135deg, 
+            rgba(255, 255, 255, 0.05) 0%, 
+            rgba(255, 255, 255, 0.02) 100%) !important;
+    }
+    
+    /* Remove tooltip on mobile when menu is open */
+    .mobile-open .sidebarOptions::after {
+        display: none !important;
+    }
+    
+    /* Hover effects for mobile menu */
+    .mobile-open .sidebarOptions:hover {
+        background: linear-gradient(135deg, 
+            var(--sidebar-hover) 0%, 
+            var(--sidebar-hover-light) 100%) !important;
+        transform: translateX(4px) !important;
+    }
+    
+    /* Active state for mobile menu */
+    .mobile-open .sidebarOptions.active {
+        background: linear-gradient(135deg, 
+            var(--twitter-hover-dark) 0%, 
+            var(--twitter-hover) 100%) !important;
+        border-left: 4px solid var(--twitter-color) !important;
+        color: var(--twitter-color) !important;
+    }
+}
+
+/* Specific override for the problematic 688px breakpoint */
+@media (max-width: 688px) {
+    /* When sidebar is closed, hide options */
+    .sidebar-container:not(.mobile-open) .sidebarOptions {
+        display: none;
+    }
+    
+    /* When sidebar is open via hamburger, show options properly */
+    .mobile-open .sidebarOptions {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+    
+    /* Ensure text is visible in mobile menu */
+    .mobile-open .sidebarOptions > h2 {
+        display: block !important;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 480px) {
+    .mobile-open .sidebarOptions {
+        padding: 10px 12px !important;
+        font-size: 16px !important;
+    }
+    
+    .mobile-open .sidebarOptions > h2 {
+        font-size: 16px !important;
+    }
+    
+    .mobile-open .sidebarOptions > .MuiSvgIcon-root {
+        font-size: 24px !important;
+        margin-right: 10px !important;
+    }
 }

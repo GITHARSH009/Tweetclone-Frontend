@@ -1,38 +1,160 @@
-.app{
+/* Base App Styles - Fixed Background and Layout Issues */
+.app {
+    background: transparent; /* Remove any background here */
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+/* Main Content Area - Fixed to fill properly */
+.main-content {
+    flex: 1;
+    overflow-y: auto;
+    transition: margin-left 0.3s ease;
+    background: transparent;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Sidebar Container */
+.sidebar-container {
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    background: rgba(0, 0, 0, 0.8);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.hamburger-btn:hover {
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.05);
+}
+
+.hamburger-btn:active {
+    transform: scale(0.95);
+}
+
+/* Hamburger Icon Animation - Enhanced */
+.hamburger {
+    width: 26px;
+    height: 20px;
+    position: relative;
+    transform: rotate(0deg);
+    transition: 0.3s ease-in-out;
+}
+
+.hamburger span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background: white;
+    border-radius: 3px;
+    opacity: 1;
+    left: 0;
+    transform: rotate(0deg);
+    transition: 0.3s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hamburger span:nth-child(1) {
+    top: 0px;
+}
+
+.hamburger span:nth-child(2) {
+    top: 8px;
+}
+
+.hamburger span:nth-child(3) {
+    top: 16px;
+}
+
+/* Hamburger Active State (X icon) - Enhanced */
+.hamburger.active span:nth-child(1) {
+    top: 8px;
+    transform: rotate(135deg);
+    background: #ff6b6b;
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+    left: -60px;
+}
+
+.hamburger.active span:nth-child(3) {
+    top: 8px;
+    transform: rotate(-135deg);
+    background: #ff6b6b;
+}
+
+/* Enhanced Sidebar Overlay */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    animation: fadeIn 0.3s ease;
+    backdrop-filter: blur(2px);
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0;
+        backdrop-filter: blur(0px);
+    }
+    to { 
+        opacity: 1;
+        backdrop-filter: blur(2px);
+    }
+}
+
+/* Background Themes - Optional (remove if not needed) */
+.snow {
+    background: url("./img1.gif");
     background-size: cover;
     background-repeat: no-repeat;
-    background-position:center;
+    background-position: center;
     height: 100vh;
     max-width: 100%;
     display: flex;
 }
-.non{
-    display: none;
-    height: 0%;
-    width: 0%;
+
+.rain {
+    background: url("./Rainmain.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
 }
 
-.snow{
-  background: url("./img1.gif");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position:center;
-  height: 100vh;
-  max-width: 100%;
-  display: flex;
-}
-
-.rain{
-  background: url("./Rainmain.gif");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position:center;
-  height: 100vh;
-  max-width: 100%;
-  display: flex;
-}
-
-  .cont{
+/* Sun Animation - Optional */
+.cont {
     width: 200px;
     height: 200px;
     background: rgba(230, 230, 7, 0.636);
@@ -42,13 +164,216 @@
     background-repeat: no-repeat;
     animation: shine 4s ease-in-out infinite;
     position: fixed;
-    /* z-index: -1; */
 }
 
-@keyframes shine{
-    50%{
+@keyframes shine {
+    50% {
         box-shadow: 0 0 20px #ffdd50,
-                    0 0 60px  #ffdd50,
+                    0 0 60px #ffdd50,
                     0 0 250px #ffdd50;
+    }
+}
+
+/* Mobile Responsive Styles - Fixed */
+@media (max-width: 768px) {
+    .app {
+        flex-direction: row; /* Keep row direction for sidebar + content */
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+    }
+    
+    /* Hide sidebar by default on mobile */
+    .sidebar-container.mobile-closed {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        transform: translateX(-100%);
+        z-index: 1000;
+        transition: transform 0.3s ease;
+    }
+    
+    /* Show sidebar when open on mobile */
+    .sidebar-container.mobile-open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 280px;
+        transform: translateX(0);
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease;
+    }
+    
+    /* Force sidebar to display when mobile menu is open */
+    .sidebar-container.mobile-open .sidebar {
+        display: flex !important;
+        flex-direction: column !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+        width: 280px !important;
+        padding: 20px 16px !important;
+        height: 100vh !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Main content takes full width on mobile */
+    .main-content {
+        width: 100vw;
+        height: 100vh;
+        margin-left: 0;
+        transition: margin-left 0.3s ease;
+        flex: 1;
+        overflow-y: auto;
+    }
+    
+    /* Restore profile info for mobile menu */
+    .sidebar-container.mobile-open .sidebar .Profile__info {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+    }
+    
+    .sidebar-container.mobile-open .sidebar .Profile__info .user__info {
+        display: block !important;
+    }
+    
+    .sidebar-container.mobile-open .sidebar .sidebar__tweet {
+        width: 100% !important;
+        height: 52px !important;
+        border-radius: 25px !important;
+    }
+    
+    /* Adjust sun position for mobile */
+    .cont {
+        width: 150px;
+        height: 150px;
+        margin-top: 2rem;
+        margin-inline: 2rem;
+    }
+}
+
+/* Tablet Responsive */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hamburger-btn {
+        display: none;
+    }
+    
+    .sidebar-container {
+        position: relative;
+        transform: none;
+        height: 100vh;
+    }
+    
+    .sidebar-container .sidebar {
+        flex: 0 0 250px !important;
+        min-width: 250px !important;
+        max-width: 280px !important;
+        height: 100vh;
+    }
+    
+    .main-content {
+        flex: 1;
+        height: 100vh;
+        max-width: calc(100% - 250px);
+    }
+    
+    .cont {
+        width: 180px;
+        height: 180px;
+        margin-inline: 5rem;
+    }
+}
+
+/* Desktop Styles - Fixed layout */
+@media (min-width: 1025px) {
+    .hamburger-btn {
+        display: none;
+    }
+    
+    .sidebar-container {
+        position: relative;
+        transform: none;
+        height: 100vh;
+    }
+    
+    /* Fixed sidebar styling for desktop */
+    .sidebar-container .sidebar {
+        display: block !important;
+        min-width: 280px !important;
+        max-width: 350px !important;
+        flex: 0 0 300px !important;
+        height: 100vh;
+    }
+    
+    /* Fixed main content width */
+    .main-content {
+        flex: 1;
+        height: 100vh;
+        width: calc(100% - 300px);
+        max-width: calc(100% - 300px);
+        overflow-y: auto;
+    }
+}
+
+/* Global Reset for potential conflicts */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#root {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Utility Classes */
+.non {
+    display: none;
+    height: 0%;
+    width: 0%;
+}
+
+/* Remove any potential gaps */
+.app * {
+    margin: 0;
+    padding: 0;
+}
+
+.app > * {
+    margin: 0;
+    padding: 0;
+}
+
+/* Ensure no background bleeding */
+.sidebar-container, 
+.main-content {
+    background: transparent;
+}
+
+/* Force proper layout on all screen sizes */
+@media (max-width: 688px) {
+    /* Override any previous rules that might conflict */
+    .sidebar-container:not(.mobile-open) {
+        display: none;
+    }
+    
+    .main-content {
+        width: 100vw !important;
+        height: 100vh !important;
+        flex: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 }

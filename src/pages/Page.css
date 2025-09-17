@@ -19,10 +19,11 @@
 
 /* Main page container - Now utilizes full remaining space */
 .page {
-    flex: 1; /* Changed from 0.5 to 1 to take all remaining space */
-    min-width: 0; /* Allow proper shrinking */
-    max-width: none; /* Remove max-width constraint */
-    padding: 0 clamp(24px, 4vw, 80px);
+    flex: 1;
+    min-width: 0;
+    max-width: 100%; /* Fixed: Set proper max-width */
+    padding: 0;
+    margin: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -35,8 +36,9 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border-right: none; /* Remove right border since no widgets */
-    overflow-y: auto; /* Enable vertical scrolling if needed */
+    border-right: none;
+    overflow-y: auto;
+    box-sizing: border-box; /* Added for proper sizing */
 }
 
 /* Subtle animated background pattern */
@@ -72,8 +74,11 @@
 
 /* Profile page specific styling - Also responsive */
 .profilePage {
-    flex: 1; /* Changed from 0.55 to 1 */
+    flex: 1;
     min-width: 0;
+    max-width: 100%; /* Fixed: Set proper max-width */
+    padding: 0;
+    margin: 0;
     overflow-y: auto;
     overflow-x: hidden;
     background: linear-gradient(180deg, 
@@ -81,7 +86,9 @@
         var(--twitter-dark-secondary) 100%);
     position: relative;
     transition: all 0.3s ease;
-    border-right: none; /* Remove right border */
+    border-right: none;
+    height: 100vh;
+    box-sizing: border-box; /* Added for proper sizing */
 }
 
 /* Enhanced scrollbar for profile page */
@@ -116,7 +123,7 @@
     font-size: clamp(28px, 4.5vw, 42px);
     font-weight: 800;
     margin: 0;
-    padding: clamp(24px, 3vh, 32px) 0;
+    padding: clamp(24px, 3vh, 32px) clamp(20px, 4vw, 40px); /* Added horizontal padding */
     letter-spacing: -0.8px;
     position: relative;
     background: linear-gradient(135deg, 
@@ -129,6 +136,7 @@
     background-clip: text;
     animation: gradient-shift 8s ease-in-out infinite;
     text-shadow: 0 2px 4px var(--twitter-shadow-light);
+    box-sizing: border-box;
 }
 
 @keyframes gradient-shift {
@@ -171,10 +179,11 @@
     flex-direction: column;
     position: relative;
     z-index: 1;
-    padding: clamp(16px, 2vh, 24px) 0;
+    padding: clamp(16px, 2vh, 24px) clamp(20px, 4vw, 40px); /* Added proper padding */
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    margin: 0;
 }
 
 /* Container to ensure proper layout */
@@ -539,5 +548,50 @@
     .page-grid-2,
     .page-grid-3 {
         grid-template-columns: 1fr;
+    }
+}
+
+/* @media (min-width: 769px) {
+    .page {
+        flex: 0 0 60% !important; 
+        max-width: 60% !important;
+    }
+} */
+@media (min-width: 1025px) {
+    .page {
+        width: calc(100vw - 300px); /* Account for 300px sidebar */
+        max-width: calc(100vw - 300px);
+    }
+    
+    .profilePage {
+        width: calc(100vw - 300px);
+        max-width: calc(100vw - 300px);
+    }
+}
+
+/* UPDATE mobile styles */
+@media (max-width: 768px) {
+    .page {
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .profilePage {
+        width: 100vw;
+        max-width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .pageTitle {
+        padding: clamp(16px, 2vh, 20px) clamp(16px, 4vw, 32px);
+    }
+    
+    .page-content {
+        padding: clamp(12px, 1.5vh, 16px) clamp(16px, 4vw, 32px);
     }
 }

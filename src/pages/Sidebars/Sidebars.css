@@ -465,3 +465,82 @@
 .sidebar.loading::before {
   animation-duration: 1s;
 }
+/* Mobile sidebar override for hamburger menu */
+@media (max-width: 688px) {
+    .mobile-open .sidebar {
+        display: flex !important;
+        min-width: 280px !important;
+        max-width: 280px !important;
+        width: 280px !important;
+    }
+}
+/* Add these fixes to your existing sidebar.css */
+
+/* Mobile sidebar override for hamburger menu */
+@media (max-width: 768px) {
+    /* Ensure sidebar is properly displayed when mobile menu is open */
+    .mobile-open .sidebar {
+        display: flex !important;
+        flex-direction: column !important; /* Keep column for main sidebar structure */
+        min-width: 280px !important;
+        max-width: 280px !important;
+        width: 280px !important;
+        padding: 20px 16px !important;
+        height: 100vh;
+        overflow-y: auto;
+        background: linear-gradient(180deg, 
+            var(--sidebar-bg) 0%, 
+            var(--sidebar-bg-secondary) 50%, 
+            var(--sidebar-bg) 100%);
+    }
+    
+    /* Fix profile info section alignment */
+    .mobile-open .sidebar .Profile__info {
+        display: flex !important;
+        flex-direction: row !important; /* Keep horizontal for profile */
+        align-items: center !important;
+        width: 100% !important;
+        padding: 16px 12px !important;
+        margin: auto 0 20px 0 !important;
+    }
+    
+    /* Ensure user info is visible */
+    .mobile-open .sidebar .Profile__info .user__info {
+        display: block !important;
+        margin-left: 12px !important;
+    }
+    
+    /* Fix tweet button */
+    .mobile-open .sidebar .sidebar__tweet {
+        width: 100% !important;
+        height: 52px !important;
+        border-radius: 25px !important;
+        margin: 20px 0 30px 0 !important;
+    }
+    
+    /* Fix Twitter icon */
+    .mobile-open .sidebar .sidebar__twitterIcon {
+        font-size: 38px !important;
+        margin: 0 0 30px 12px !important;
+    }
+    
+    /* Navigation container should be column */
+    .mobile-open .sidebar .sidebar-nav {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 4px !important;
+    }
+}
+
+/* Override any conflicting styles from the original responsive rules */
+@media (max-width: 688px) {
+    /* This was hiding the sidebar completely, we need to override this for mobile menu */
+    .sidebar-container.mobile-open .sidebar {
+        display: flex !important;
+    }
+    
+    /* Remove the display: none rule when mobile menu is active */
+    .mobile-open .sidebar {
+        display: flex !important;
+    }
+}
