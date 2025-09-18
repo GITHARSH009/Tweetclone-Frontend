@@ -32,7 +32,8 @@ function Post({ p }) {
             <p>{Post}</p>
           </div>
         </div>
-        <img src={Photo} alt="" height='400' width='500' />
+        {/* Removed fixed height and width attributes for responsiveness */}
+        <img src={Photo} alt="" className="post__image" />
         <div className="post__footer">
           <ChatBubbleOutlineIcon className="post__footer__icon" fontSize="small" />
           <RepeatIcon className="post__footer__icon" fontSize="small" />

@@ -1,10 +1,11 @@
-/* Enhanced Feed.css with improved design */
+/* Enhanced Feed.css - Fully Mobile Responsive */
 
 .feed {
-    flex: 1; /* Changed from 0.6 to 1 for better space utilization */
+    flex: 1;
     border-right: 1px solid var(--twitter-background);
-    min-width: fit-content;
-    overflow-y: auto; /* Changed from scroll to auto for better UX */
+    min-width: 0; /* Changed from fit-content for mobile compatibility */
+    width: 100%; /* Added for mobile */
+    overflow-y: auto;
     overflow-x: hidden;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -14,6 +15,7 @@
         rgba(15, 20, 25, 0.95) 100%);
     position: relative;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
 }
 
 /* Subtle animated background */
@@ -43,7 +45,7 @@
     }
 }
 
-/* Enhanced scrollbar */
+/* Enhanced scrollbar - Hide on mobile */
 .feed::-webkit-scrollbar {
     width: 8px;
 }
@@ -68,22 +70,21 @@
     background-clip: content-box;
 }
 
-/* Enhanced header */
+/* Enhanced header - Mobile responsive */
 .feed__header {
     position: sticky;
     top: 0;
     z-index: 100;
     border-bottom: 1px solid var(--twitter-background);
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    padding: clamp(16px, 2vh, 24px) clamp(24px, 4vw, 40px);
+    padding: clamp(12px, 2vh, 20px) clamp(16px, 4vw, 32px);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     background: rgba(15, 20, 25, 0.95);
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* Header background enhancement */
@@ -106,9 +107,9 @@
     opacity: 1;
 }
 
-/* Enhanced header title */
+/* Enhanced header title - Responsive typography */
 .feed__header > h2 {
-    font-size: clamp(20px, 3vw, 24px);
+    font-size: clamp(18px, 4vw, 24px);
     font-weight: 800;
     margin: 0;
     letter-spacing: -0.5px;
@@ -124,6 +125,7 @@
     background-clip: text;
     animation: header-gradient 8s ease-in-out infinite;
     transition: all 0.3s ease;
+    line-height: 1.2;
 }
 
 @keyframes header-gradient {
@@ -131,28 +133,45 @@
     50% { background-position: 100% 50%; }
 }
 
-/* Loading state styling */
+/* Content area - Mobile responsive */
+.feed__content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Loading state styling - Mobile responsive */
 .feed__loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: clamp(40px, 8vh, 80px) clamp(20px, 4vw, 40px);
+    flex-direction: column;
+    gap: 12px;
+    padding: clamp(30px, 8vh, 60px) clamp(16px, 4vw, 32px);
     color: #8B98A5;
-    font-size: clamp(16px, 2vw, 18px);
+    font-size: clamp(14px, 2vw, 16px);
     font-weight: 500;
     position: relative;
     z-index: 1;
+    text-align: center;
+}
+
+/* Enhanced loading spinner */
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(29, 161, 242, 0.3);
+    border-top: 3px solid #1DA1F2;
+    border-radius: 50%;
+    animation: loading-spin 1s linear infinite;
+    margin-bottom: 8px;
 }
 
 .feed__loading::before {
-    content: '';
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(29, 161, 242, 0.3);
-    border-top: 2px solid #1DA1F2;
-    border-radius: 50%;
-    animation: loading-spin 1s linear infinite;
-    margin-right: 12px;
+    display: none; /* Remove old spinner */
 }
 
 @keyframes loading-spin {
@@ -160,13 +179,213 @@
     100% { transform: rotate(360deg); }
 }
 
-/* Content area */
-.feed__content {
-    position: relative;
-    z-index: 1;
+/* Error state styling */
+.feed__error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: clamp(30px, 8vh, 60px) clamp(16px, 4vw, 32px);
+    color: #ff6b6b;
+    text-align: center;
 }
 
-/* Enhanced hover effects */
+.feed__error p {
+    font-size: clamp(14px, 2vw, 16px);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.retry-button {
+    background: linear-gradient(135deg, #1DA1F2 0%, #1A91DA 100%);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: clamp(13px, 1.8vw, 14px);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 80px;
+}
+
+.retry-button:hover {
+    background: linear-gradient(135deg, #1A91DA 0%, #1580C7 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3);
+}
+
+.retry-button:active {
+    transform: translateY(0);
+}
+
+/* Empty state styling */
+.feed__empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(40px, 10vh, 80px) clamp(16px, 4vw, 32px);
+    color: #8B98A5;
+    text-align: center;
+}
+
+.feed__empty p {
+    font-size: clamp(14px, 2vw, 16px);
+    margin: 0;
+    line-height: 1.4;
+}
+
+/* Desktop Responsive (1200px+) */
+@media (min-width: 1200px) {
+    .feed {
+        max-width: none;
+    }
+    
+    .feed__header {
+        padding: 20px 32px;
+    }
+    
+    .feed__header > h2 {
+        font-size: 24px;
+    }
+}
+
+/* Large tablets and small desktops (769px - 1199px) */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .feed {
+        border-right: 1px solid var(--twitter-background);
+    }
+    
+    .feed__header {
+        padding: clamp(16px, 2vh, 20px) clamp(24px, 3vw, 32px);
+    }
+    
+    .feed__header > h2 {
+        font-size: clamp(20px, 2.5vw, 24px);
+    }
+}
+
+/* Tablets (481px - 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+    .feed {
+        width: 100%;
+        min-width: 0;
+        border-right: none; /* Remove border on tablets */
+    }
+    
+    .feed__header {
+        padding: clamp(14px, 2vh, 18px) clamp(20px, 4vw, 28px);
+    }
+    
+    .feed__header > h2 {
+        font-size: clamp(18px, 3vw, 22px);
+    }
+    
+    .feed__loading,
+    .feed__error,
+    .feed__empty {
+        padding: clamp(25px, 6vh, 50px) clamp(20px, 4vw, 28px);
+    }
+    
+    .loading-spinner {
+        width: 22px;
+        height: 22px;
+        border-width: 2.5px;
+    }
+    
+    /* Hide scrollbar on tablets */
+    .feed::-webkit-scrollbar {
+        width: 4px;
+    }
+}
+
+/* Mobile devices (320px - 480px) */
+@media (max-width: 480px) {
+    .feed {
+        width: 100vw;
+        min-width: 100vw;
+        max-width: 100vw;
+        border-right: none;
+        border-left: none;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .feed__header {
+        padding: 12px 16px;
+        border-radius: 0; /* Remove border radius on mobile */
+    }
+    
+    .feed__header > h2 {
+        font-size: 18px;
+        font-weight: 700; /* Slightly lighter for mobile */
+        letter-spacing: -0.3px;
+    }
+    
+    .feed__content {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .feed__loading,
+    .feed__error,
+    .feed__empty {
+        padding: 20px 16px;
+    }
+    
+    .loading-spinner {
+        width: 20px;
+        height: 20px;
+        border-width: 2px;
+    }
+    
+    .retry-button {
+        padding: 8px 16px;
+        font-size: 13px;
+        border-radius: 16px;
+    }
+    
+    /* Hide scrollbar completely on mobile */
+    .feed::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* Reduce animations for better mobile performance */
+    .feed::before {
+        animation-duration: 40s;
+    }
+    
+    .feed__header > h2 {
+        animation-duration: 12s;
+    }
+}
+
+/* Extra small devices (below 320px) */
+@media (max-width: 319px) {
+    .feed__header {
+        padding: 10px 12px;
+    }
+    
+    .feed__header > h2 {
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    .feed__loading,
+    .feed__error,
+    .feed__empty {
+        padding: 16px 12px;
+    }
+    
+    .retry-button {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-width: 70px;
+    }
+}
+
+/* Enhanced hover effects - Desktop only */
 @media (hover: hover) and (pointer: fine) {
     .feed:hover {
         background: linear-gradient(180deg, 
@@ -184,57 +403,17 @@
     }
 }
 
-/* Responsive design */
-@media (max-width: 1200px) {
-    .feed__header {
-        padding: clamp(14px, 1.8vh, 20px) clamp(20px, 3.5vw, 32px);
-    }
-}
-
-@media (max-width: 768px) {
-    .feed {
-        min-width: auto;
-        width: 100%;
-    }
-    
-    .feed__header {
-        padding: clamp(12px, 1.5vh, 16px) clamp(16px, 3vw, 24px);
-    }
-    
-    .feed__header > h2 {
-        font-size: clamp(18px, 4vw, 22px);
-    }
-    
-    .feed__loading {
-        padding: clamp(30px, 6vh, 60px) clamp(16px, 3vw, 32px);
-    }
-    
-    /* Reduce animations for mobile performance */
-    .feed::before {
-        animation-duration: 30s;
-    }
-}
-
-@media (max-width: 480px) {
-    .feed__header {
-        padding: 12px 16px;
-    }
-    
-    .feed__header > h2 {
-        font-size: 18px;
-    }
-}
-
 /* Accessibility improvements */
 @media (prefers-reduced-motion: reduce) {
     .feed::before,
     .feed__header > h2,
-    .feed__loading::before {
+    .loading-spinner {
         animation: none !important;
     }
     
     .feed,
-    .feed__header {
+    .feed__header,
+    .retry-button {
         transition: none !important;
     }
     
@@ -250,6 +429,11 @@
 .feed:focus-within {
     outline: 2px solid #1DA1F2;
     outline-offset: -2px;
+}
+
+.retry-button:focus {
+    outline: 2px solid #1DA1F2;
+    outline-offset: 2px;
 }
 
 /* Dark mode enhancements */
@@ -287,5 +471,45 @@
         -webkit-background-clip: unset;
         -webkit-text-fill-color: unset;
         background-clip: unset;
+    }
+    
+    .retry-button {
+        background: #1DA1F2;
+        border: 2px solid #1DA1F2;
+    }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 768px) and (orientation: landscape) {
+    .feed__header {
+        padding: 8px 16px;
+    }
+    
+    .feed__header > h2 {
+        font-size: 16px;
+    }
+    
+    .feed__loading,
+    .feed__error,
+    .feed__empty {
+        padding: 16px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .feed {
+        background: white !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+    }
+    
+    .feed::before,
+    .feed__header::before {
+        display: none !important;
+    }
+    
+    .loading-spinner {
+        display: none !important;
     }
 }

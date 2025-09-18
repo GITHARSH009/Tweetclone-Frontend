@@ -1,52 +1,195 @@
+/* Enhanced Post.css - Mobile Responsive */
 .post {
     display: flex;
     align-items: flex-start;
     border-bottom: 1px solid var(--twitter-background);
     padding-bottom: 10px;
-  }
-  
-  .post__body {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.post__body {
     flex: 1;
     padding: 10px;
-  }
-  
-  .post__body>img {
+    min-width: 0; /* Prevents flex item from overflowing */
+    width: 100%;
+}
+
+/* Responsive image styling - Consistent dimensions for all posts */
+.post__image {
+    width: 100%;
+    height: clamp(21rem, 25vw, 28rem); /* Responsive height using rem units */
+    max-width: 31.25rem; /* 500px converted to rem */
+    border-radius: 1.25rem; /* 20px converted to rem */
+    object-fit: cover; /* Crops image to fit while maintaining aspect ratio */
+    display: block;
+    margin: 0.625rem 0; /* 10px converted to rem */
+    background-color: #f0f0f0; /* Fallback background */
+}
+
+.post__body > img {
     border-radius: 20px;
-  }
-  
-  .post__footer {
+}
+
+.post__footer {
     display: flex;
     justify-content: space-between;
     padding: 0 10px;
     margin-top: 10px;
-  }
-  
-  .post__footer__icon:hover {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.post__footer__icon:hover {
     cursor: pointer;
     color: var(--twitter-color);
-  }
-  
-  .post__headerDescription {
+}
+
+.post__headerDescription {
     margin-bottom: 10px;
-    font-size: 15px;
-  }
-  
-  .post__headerText>h3 {
-    font-size: 15px;
+    font-size: clamp(14px, 2.5vw, 15px); /* Responsive font size */
+    line-height: 1.4;
+    word-wrap: break-word; /* Handle long words */
+    overflow-wrap: break-word;
+}
+
+.post__headerDescription p {
+    margin: 0;
+    word-break: break-word; /* Ensure long text wraps properly */
+}
+
+.post__headerText > h3 {
+    font-size: clamp(14px, 2.5vw, 15px); /* Responsive font size */
     margin-bottom: 5px;
-  }
-  
-  .post__badge {
+    word-wrap: break-word;
+    line-height: 1.3;
+}
+
+.post__badge {
     font-size: 14px !important;
     color: var(--twitter-color);
-  }
-  
-  .post__headerSpecial {
+}
+
+.post__headerSpecial {
     font-weight: 600;
-    font-size: 12px;
+    font-size: clamp(11px, 2vw, 12px); /* Responsive font size */
     color: gray;
-  }
-  
-  .post__avatar {
+}
+
+.post__avatar {
     padding: 20px;
-  }
+    flex-shrink: 0; /* Prevent avatar from shrinking */
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    .post {
+        padding: 0.5rem 0;
+        padding-bottom: 0.75rem;
+    }
+    
+    .post__body {
+        padding: 0.5rem;
+    }
+    
+    .post__image {
+        max-width: 100%;
+        height: clamp(18rem, 23vw, 21rem); /* Increased mobile height for better proportion */
+        border-radius: 1rem;
+        margin: 0.5rem 0;
+    }
+    
+    .post__avatar {
+        padding: 1rem 0.75rem;
+    }
+    
+    .post__footer {
+        padding: 0 0.5rem;
+        margin-top: 0.5rem;
+    }
+    
+    .post__footer__icon {
+        font-size: 1.125rem !important; /* 18px converted to rem */
+    }
+    
+    .post__headerDescription {
+        font-size: clamp(0.875rem, 2.5vw, 0.9375rem); /* 14px-15px in rem */
+        margin-bottom: 0.5rem;
+    }
+    
+    .post__headerText > h3 {
+        font-size: clamp(0.875rem, 2.5vw, 0.9375rem);
+        margin-bottom: 0.25rem;
+    }
+    
+    .post__headerSpecial {
+        font-size: clamp(0.6875rem, 2vw, 0.75rem); /* 11px-12px in rem */
+    }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+    .post {
+        padding: 0.375rem 0;
+        padding-bottom: 0.625rem;
+    }
+    
+    .post__body {
+        padding: 0.375rem;
+    }
+    
+    .post__image {
+        height: clamp(12rem, 18vw, 14rem); /* Better proportion for small screens */
+        border-radius: 0.75rem;
+        margin: 0.375rem 0;
+    }
+    
+    .post__avatar {
+        padding: 0.75rem 0.5rem;
+    }
+    
+    .post__avatar .MuiAvatar-root {
+        width: 2.25rem !important; /* 36px converted to rem */
+        height: 2.25rem !important;
+    }
+    
+    .post__footer {
+        padding: 0 0.375rem;
+        margin-top: 0.375rem;
+    }
+    
+    .post__footer__icon {
+        font-size: 1rem !important; /* 16px converted to rem */
+    }
+    
+    .post__headerDescription {
+        font-size: clamp(0.8125rem, 2.2vw, 0.875rem); /* 13px-14px in rem */
+        margin-bottom: 0.375rem;
+    }
+    
+    .post__headerText > h3 {
+        font-size: clamp(0.8125rem, 2.2vw, 0.875rem);
+        margin-bottom: 0.1875rem;
+    }
+    
+    .post__headerSpecial {
+        font-size: clamp(0.625rem, 1.8vw, 0.6875rem); /* 10px-11px in rem */
+    }
+}
+
+/* Very small screens */
+@media (max-width: 320px) {
+    .post__image {
+        height: clamp(10rem, 16vw, 12rem); /* Better proportion for very small screens */
+        border-radius: 0.625rem;
+    }
+    
+    .post__avatar .MuiAvatar-root {
+        width: 2rem !important; /* 32px converted to rem */
+        height: 2rem !important;
+    }
+    
+    .post__footer__icon {
+        font-size: 0.9375rem !important; /* 15px converted to rem */
+    }
+}
