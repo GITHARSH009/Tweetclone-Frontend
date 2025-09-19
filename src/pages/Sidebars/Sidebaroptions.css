@@ -243,7 +243,7 @@
 }
 
 /* Collapsed sidebar (icon-only) */
-@media screen and (max-width: 950px) {
+/* @media screen and (max-width: 950px) {
   .sidebarOptions {
     padding: 12px;
     justify-content: center;
@@ -285,7 +285,6 @@
     transform: none;
   }
   
-  /* Tooltip for collapsed state */
   .sidebarOptions::after {
     content: attr(data-tooltip);
     position: absolute;
@@ -309,7 +308,7 @@
   .sidebarOptions:hover::after {
     opacity: 1;
   }
-}
+} */
 
 @media screen and (max-width: 688px) {
   .sidebarOptions {

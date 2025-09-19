@@ -1,7 +1,8 @@
 import React from 'react'
 import Sidebarsoptions from './Sidebarsoptions'
 import './Sidebars.css'
-import TwitterIcon from "@mui/icons-material/Twitter";
+// import TwitterIcon from "@mui/icons-material/Twitter";
+import ChatIcon from '@mui/icons-material/Chat';
 import HomeIcon from "@mui/icons-material/Home";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
@@ -53,7 +54,7 @@ const Sidebars = ({ handleLogout, user }) => {
 
   return (
     <div className="sidebar">
-      <TwitterIcon className="sidebar__twitterIcon" />
+      <ChatIcon className="sidebar__twitterIcon" />
       <Link style={{'color':day,'textDecoration':'None'}} to='/home'>
       <Sidebarsoptions active Icon={HomeIcon} text="Home" />
       </Link>

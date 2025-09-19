@@ -109,7 +109,7 @@
 /* Enhanced Twitter Icon */
 .sidebar__twitterIcon {
   color: var(--twitter-color);
-  font-size: 38px !important;
+  font-size: 45px !important;
   margin: 0 0 30px 12px;
   padding: 12px;
   border-radius: 50%;
@@ -375,18 +375,18 @@
     min-width: auto !important;
   }
   
-  .Profile__info {
+  /* .Profile__info {
     flex-direction: column !important;
     padding: 12px 8px !important;
-  }
+  } */
   
-  .Profile__info .user__info {
+  /* .Profile__info .user__info {
     display: none;
-  }
+  } */
   
-  .Profile__info .MuiIconButton-root {
+  /* .Profile__info .MuiIconButton-root {
     margin: 8px 0 0 0 !important;
-  }
+  } */
 }
 
 @media screen and (max-width: 688px) {
