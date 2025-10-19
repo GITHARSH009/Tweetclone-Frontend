@@ -17,35 +17,14 @@ const TweetBox = () => {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
     const [blue, setBlue] = useState(0);
-    const [postLimit, setPostLimit] = useState(0);
+    // REMOVED: const [postLimit, setPostLimit] = useState(0);
+    const [remainingPosts, setRemainingPosts] = useState(null); // ✅ NEW: Track from backend
     const { makeAuthenticatedRequest } = useUserAuth();
+    const {token} = useUserAuth();
 
     const email = user?.email;
-    const userProfilePic = loggedInUser[0]?.profileImage || "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
-
-    // Expiry date logic
-    const today = new Date();
-    const todayDate = today.getDate().toString();
-    const currentMonth = today.getMonth();
-    const nextMonth = (currentMonth + 1) % 12;
-    const expDate = loggedInUser[0]?.Exp;
-
-    // Update user post limit if expired
-    useEffect(() => {
-        if (expDate === todayDate + currentMonth) {
-            const update = {
-                count: 60,
-                bt: 0,
-                Exp: nextMonth,
-            };
-            makeAuthenticatedRequest(`https://tweetmaster.onrender.com/exp/${email}`, {
-                method: "PATCH",
-                headers: { "content-type": "application/json" },
-                body: JSON.stringify(update),
-            }).then(res => res.json())
-              .then(data => console.log(data));
-        }
-    }, [email, currentMonth, nextMonth, todayDate, expDate, makeAuthenticatedRequest]);
+    const userProfilePic = loggedInUser[0]?.profileImage || 
+        "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png";
 
     // Fetch user details
     useEffect(() => {
@@ -56,8 +35,9 @@ const TweetBox = () => {
                     setName(data[0]?.Name || "");
                     setUsername(data[0]?.Username || email.split("@")[0]);
                     setBlue(data[0]?.bt || 0);
-                    setPostLimit(data[0]?.count || 0);
-                });
+                    setRemainingPosts(data[0]?.count || 0); // ✅ Set initial count
+                })
+                .catch(err => console.error("Failed to fetch user:", err));
         }
     }, [email, makeAuthenticatedRequest]);
 
@@ -74,7 +54,8 @@ const TweetBox = () => {
                 setLoading(false);
             })
             .catch(error => {
-                console.log(error);
+                console.error("Image upload failed:", error);
+                alert("Failed to upload image. Please try again.");
                 setLoading(false);
             });
     };
@@ -83,54 +64,68 @@ const TweetBox = () => {
     const handleTweet = async (e) => {
         e.preventDefault();
 
-        if (postLimit <= 0) {
+        if (!user) {
+            alert("Please log in to post");
+            return;
+        }
+
+        // Check remaining posts on frontend (optional - backend will also check)
+        if (remainingPosts !== null && remainingPosts <= 0) {
             alert("You have reached the maximum limit of monthly posts. Upgrade your subscription to continue posting.");
             return;
         }
 
-        if (user) {
-            const userPost = {
-                Profile: userProfilePic,
-                Post: post,
-                Photo: imageURL,
-                Username: username,
-                Name: name,
-                Email: email,
-                bt: blue,
-            };
+        const userPost = {
+            Profile: userProfilePic,
+            Post: post,
+            Photo: imageURL,
+            Username: username,
+            Name: name,
+            Email: email,
+            bt: blue,
+        };
 
-            // Reset input fields
-            setPost("");
-            setImageURL("");
+        // Reset input fields immediately for better UX
+        setPost("");
+        setImageURL("");
 
-            // Send post request
-            try {
-                const response = await makeAuthenticatedRequest("https://tweetmaster.onrender.com/post", {
+        try {
+            // Single API call - backend handles everything
+            const currentToken=token || localStorage.getItem('firebaseToken');
+            const response = await fetch(
+                "https://tweetmaster.onrender.com/post", 
+                {
                     method: "POST",
-                    headers: { "content-type": "application/json" },
+                    headers: { 
+                    "Content-type": "application/json",
+                    "authorization": `Bearer ${currentToken}`
+                     },
                     body: JSON.stringify(userPost),
-                });
-                const data = await response.json();
-                console.log(data);
-
-                // Decrease post count
-                const updatedCount = postLimit - 1;
-                setPostLimit(updatedCount);
-                makeAuthenticatedRequest(`https://tweetmaster.onrender.com/updone/${email}`, {
-                    method: "PATCH",
-                    headers: { "content-type": "application/json" },
-                    body: JSON.stringify({ count: updatedCount }),
-                });
-
-                // Send Kafka Notification
-                await makeAuthenticatedRequest("https://tweetmaster.onrender.com/notifications", {
-                    method: "POST",
-                    headers: { "content-type": "application/json" },
-                    body: JSON.stringify({ notifyTo: "everyone", message: `${username} has made a post on ChatTown` }), // Send to a specific user
-                }).catch(err => console.error("Notification Error:", err));
-            } catch (error) {
-                console.error("Post Creation Error:", error);
+                }
+            );
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                // ✅ Update remaining posts from backend response
+                setRemainingPosts(data.remainingPosts);
+                
+                // Optional: Show success message
+                // alert("Post created successfully!");
+            } else {
+                // Backend rejected (limit reached or other error)
+                alert(data.message || "Failed to create post");
+                console.error("Post creation failed:", data.message);
             }
+            
+        } catch (error) {
+            console.error("Post creation failed:", error);
+            
+            // Restore input if post failed
+            setPost(userPost.Post);
+            setImageURL(userPost.Photo);
+            
+            alert("Failed to create post. Please try again.");
         }
     };
 
@@ -150,10 +145,36 @@ const TweetBox = () => {
                 </div>
                 <div className="imageIcon_tweetButton">
                     <label htmlFor="image" className="imageIcon">
-                        {loading ? <p>Uploading Image...</p> : <p>{imageURL ? "Image Uploaded" : <AddPhotoAlternateOutlinedIcon />}</p>}
+                        {loading ? (
+                            <p>Uploading Image...</p>
+                        ) : (
+                            <p>
+                                {imageURL ? "Image Uploaded" : <AddPhotoAlternateOutlinedIcon />}
+                            </p>
+                        )}
                     </label>
-                    <input type="file" id="image" className="imageInput" onChange={handleUploadImage} accept="image/*" />
-                    <Button className="tweetBox_tweetButton" type="submit">Tweet</Button>
+                    <input 
+                        type="file" 
+                        id="image" 
+                        className="imageInput" 
+                        onChange={handleUploadImage} 
+                        accept="image/*" 
+                    />
+                    
+                    {/* Optional: Show remaining posts */}
+                    {remainingPosts !== null && (
+                        <span style={{ marginRight: '10px', color: remainingPosts < 5 ? 'red' : 'gray' }}>
+                            {remainingPosts} posts left
+                        </span>
+                    )}
+                    
+                    <Button 
+                        className="tweetBox_tweetButton" 
+                        type="submit"
+                        disabled={loading}
+                    >
+                        Tweet
+                    </Button>
                 </div>
             </form>
         </div>
