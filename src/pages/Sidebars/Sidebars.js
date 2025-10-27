@@ -70,6 +70,9 @@ const Sidebars = ({ handleLogout, user }) => {
       <CustomLink to='/Home/profile'>
       <Sidebarsoptions Icon={PermIdentityIcon} text="Profile" />
       </CustomLink>
+      <CustomLink to='/Home/todolist'>
+      <Sidebarsoptions Icon={PermIdentityIcon} text="List" />
+      </CustomLink>
       <CustomLink to='/Home/news'>
       <Sidebarsoptions Icon={NewspaperIcon} text="News" />
       </CustomLink>

@@ -86,7 +86,7 @@ const Movies = () => {
                 id="search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyUp={handleKeyPress}
                 placeholder="Search for movies..."
                 className="movies-search-input"
               />

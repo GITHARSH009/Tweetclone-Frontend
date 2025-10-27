@@ -1,6 +1,7 @@
 import './App.css';
 import {BrowserRouter as Router,Routes,Route} from 'react-router-dom';
 import Login from './pages/Login/Login';
+import ToDoList from './pages/ToDoList/ToDoList';
 import Home from './pages/Home/Home';
 import News from './pages/News/News';
 import Signup from './pages/Login/Signup';
@@ -35,6 +36,7 @@ function App() {
         <Route path='messages' element={<Messages/>}/>
         <Route path="/Home/messages/chat/:chatUserEmail" element={<Chat />} />
         <Route path='movies' element={<Movies/>}/>
+        <Route path='todolist' element={<ToDoList/>}/>
         <Route path='profile' element={<Profile/>}/>
         <Route path='plan' element={<Plan/>}/>
         <Route path='paymentsuccess' element={<Result/>}/>
