@@ -8,13 +8,20 @@ import useUserAuth from "../../Context/UserAuthContext";
 const Plan = () => {
   const [selectedPlan, setSelectedPlan] = useState(null);
   const { user } = useUserAuth();
+  const {token} =useUserAuth();
   const email = user?.email || "";
 
   const checkouthandler = async (amount) => {
     setSelectedPlan(amount);
     console.log(`Processing payment for ₹${amount}`);
-    const {data:{key}}=await axios.get("https://tweetmaster.onrender.com/api/getkey")
-    const {data:{order}}=await axios.post("https://tweetmaster.onrender.com/checkout",{amount,email})
+    const currentToken=token || localStorage.getItem("token");
+    const {data:{key}}=await axios.get("https://tweetmaster.onrender.com/api/getkey",{headers:{
+      Authorization:`Bearer ${currentToken}`
+    }});
+    const {data:{order}}=await axios.post("https://tweetmaster.onrender.com/checkout",{amount,email},{
+      headers:{
+      Authorization:`Bearer ${currentToken}`
+    }});
     console.log(window);
     console.log(order);
     const options ={
