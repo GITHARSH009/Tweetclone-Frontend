@@ -62,9 +62,6 @@ const Signup = () => {
         try {
             const result = await googleSignIn();
             
-            // Get the ID token immediately after successful Google sign-in
-            const idToken = await result.user.getIdToken();
-            
             // Register Google user in backend
             const user = {
                 Username: result.user.displayName?.replace(/\s+/g, '').toLowerCase() || result.user.email?.split('@')[0],
@@ -75,8 +72,7 @@ const Signup = () => {
             const response = await fetch("https://tweetmaster.onrender.com/register", {
                 method: "POST",
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${idToken}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(user),
             });
