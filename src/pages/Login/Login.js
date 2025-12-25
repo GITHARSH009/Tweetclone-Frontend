@@ -35,7 +35,30 @@ const Login = () => {
     const handleGoogleSignIn = async (e) => {
         e.preventDefault();
         try {
-            await googleSignIn();
+            const result = await googleSignIn();
+            
+            // Register Google user in backend
+            const user = {
+                Username: result.user.displayName?.replace(/\s+/g, '').toLowerCase() || result.user.email?.split('@')[0],
+                Name: result.user.displayName || '',
+                Email: result.user.email
+            };
+            
+            const response = await fetch("https://tweetmaster.onrender.com/register", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user),
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Google user registered in backend:', data);
+            } else {
+                console.error('Failed to register Google user in backend');
+            }
+            
             navigate("/");
         } catch (error) {
             console.log(error.message);
